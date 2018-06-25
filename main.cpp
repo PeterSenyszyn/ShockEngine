@@ -1,8 +1,8 @@
-#include <iostream>
+#include <SFML/Graphics.hpp>
+#include <Thor/Input.hpp>
+#include <SFGUI/SFGUI.hpp>
 
 int main()
 {
-    std::cout << "Hello, World!" << std::endl ;
-
-    return 0 ;
+    return 0;
 }
