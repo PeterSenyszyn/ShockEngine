@@ -5,7 +5,7 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(SOURCE_FILES main.cpp src/Core/Application.cpp src/Core/Application.hpp)
+set(SOURCE_FILES main.cpp src/Core/Application.cpp include/Core/Application.hpp src/Input/InputManager.cpp include/Input/InputManager.hpp include/Input/KeyActionIds.hpp include/Input/Manager.hpp src/Core/State.cpp include/Core/State.hpp src/Core/StateStack.cpp include/Core/StateStack.hpp include/Core/StateIds.hpp)
 add_executable(ShockEngine ${SOURCE_FILES})
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake_modules")

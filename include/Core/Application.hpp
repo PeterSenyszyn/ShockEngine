@@ -7,6 +7,9 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "StateStack.hpp"
+#include "../Input/InputManager.hpp"
+
 namespace Shock
 {
 namespace Core
@@ -14,7 +17,16 @@ namespace Core
     class Application
     {
     private:
+        void registerStates() ;
+
+    private:
         sf::RenderWindow _renderWindow ;
+
+        //Finite state machine
+        StateStack _stateStack ;
+
+        //Engine managers
+        Input::InputManager _inputManager ;
 
         float _maxFps ;
 
