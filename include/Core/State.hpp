@@ -9,6 +9,8 @@
 
 #include <SFML/Window/Event.hpp>
 
+#include "StateIds.hpp"
+
 namespace Shock
 {
 namespace Core
@@ -22,7 +24,7 @@ namespace Core
 
         struct Context
         {
-
+            Context() ;
         } ;
 
     private:
@@ -30,7 +32,7 @@ namespace Core
         Context     _context ;
 
     protected:
-        void requestStackPush( States::Id stateId ) ;
+        void requestStackPush( StateIds stateId ) ;
         void requestStackPop() ;
         void requestStateClear() ;
 
