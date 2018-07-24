@@ -25,6 +25,9 @@ namespace Core
         //Finite state machine
         StateStack _stateStack ;
 
+        //Context buffer for states
+        ContextBuffer _contextBuffer ;
+
         //Engine managers
         Input::InputManager _inputManager ;
 

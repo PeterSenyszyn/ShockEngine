@@ -23,6 +23,7 @@ namespace Core
     State::Ptr StateStack::createState( StateIds stateId )
     {
         auto found = _factories.find( stateId ) ;
+
         assert( found != _factories.end() ) ;
 
         return found->second() ;
@@ -65,15 +66,6 @@ namespace Core
     StateStack::StateStack( State::Context context ) :
     _context( context )
     {
-    }
-
-    template <typename T>
-    void StateStack::registerState( StateIds stateId )
-    {
-        _factories[stateId] = [this]()
-        {
-            return State::Ptr( new T( *this, _context ) ) ;
-        } ;
     }
 
     void StateStack::handleEvent( const sf::Event& event )

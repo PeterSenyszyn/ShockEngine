@@ -63,6 +63,15 @@ namespace Core
 
         bool isEmpty() const ;
     } ;
+
+    template <typename T>
+    void StateStack::registerState( StateIds stateId )
+    {
+        _factories[stateId] = [this]()
+        {
+            return State::Ptr( new T( *this, _context ) ) ;
+        } ;
+    }
 }}
 
 #endif //SHOCKENGINE_STATESTACK_HPP

@@ -11,7 +11,8 @@ namespace Core
 {
     ////////////////////////////////////////////////////////////////////////////////////////
 
-    State::Context::Context()
+    State::Context::Context( ContextBuffer& buffer ) :
+    buffer( &buffer )
     {
     }
 
@@ -35,6 +36,11 @@ namespace Core
     State::Context State::getContext() const
     {
         return _context ;
+    }
+
+    const std::string& State::getStateName()
+    {
+        return typeid( this ).name() ;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////

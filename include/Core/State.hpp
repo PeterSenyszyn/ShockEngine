@@ -10,6 +10,7 @@
 #include <SFML/Window/Event.hpp>
 
 #include "StateIds.hpp"
+#include "ContextBuffer.hpp"
 
 namespace Shock
 {
@@ -24,7 +25,9 @@ namespace Core
 
         struct Context
         {
-            Context() ;
+            explicit Context( ContextBuffer& buffer ) ;
+
+            ContextBuffer* buffer ;
         } ;
 
     private:
@@ -37,6 +40,8 @@ namespace Core
         void requestStateClear() ;
 
         Context getContext() const ;
+
+        const std::string& getStateName() ;
 
     public:
         State( StateStack& stack, Context context ) ;

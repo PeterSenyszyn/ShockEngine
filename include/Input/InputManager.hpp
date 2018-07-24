@@ -25,7 +25,7 @@ namespace Input
     public:
         InputManager() ;
 
-        virtual void processInput() ;
+        void processInput() override ;
 
         ///////////////////////////////////////////
 

@@ -4,6 +4,9 @@
 
 #include "../../include/Core/Application.hpp"
 
+#include "../../include/States/GameState.hpp"
+#include "../../include/States/PauseState.hpp"
+
 #include <SFML/Window/Event.hpp>
 
 namespace Shock
@@ -14,13 +17,14 @@ namespace Core
 
     void Application::registerStates()
     {
-        //_stateStack.registerState
+        _stateStack.registerState<States::GameState>( StateIds::Game ) ;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////
 
     Application::Application() :
-    _stateStack( State::Context() ),
+    _stateStack( State::Context( _contextBuffer ) ),
+    _contextBuffer( _renderWindow, _inputManager ),
     _maxFps( 60 )
     {
         sf::Uint32 style = sf::Style::Titlebar | sf::Style::Close ;
@@ -30,6 +34,10 @@ namespace Core
 
         _renderWindow.resetGLStates() ;
         _renderWindow.setKeyRepeatEnabled( false ) ;
+
+        registerStates() ;
+
+        _stateStack.pushState( StateIds::Game ) ;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////
@@ -45,6 +53,8 @@ namespace Core
             _inputManager.pushEvent( event );
             _inputManager.processInput();
 
+            _stateStack.handleEvent( event ) ;
+
             if ( event.type == sf::Event::Closed )
             { quit(); }
         }
@@ -52,12 +62,16 @@ namespace Core
 
     void Application::update( sf::Time dt )
     {
-
+        _stateStack.update( dt ) ;
     }
 
     void Application::render()
     {
         _renderWindow.clear() ;
+
+        _stateStack.draw() ;
+
+        _renderWindow.setView( _renderWindow.getDefaultView() ) ;
 
         _renderWindow.display() ;
     }
