@@ -8,10 +8,14 @@ namespace Shock
 {
 namespace Core
 {
-    ContextBuffer::ContextBuffer( sf::RenderWindow &window,
-                                  Input::InputManager& inputManager ) :
+    ContextBuffer::ContextBuffer( sf::RenderWindow& window,
+                                  Input::InputManager& inputManager,
+                                  TextureHolder& textureHolder,
+                                  FontHolder& fontHolder ) :
     window( &window ),
-    inputManager( &inputManager )
+    inputManager( &inputManager ),
+    textureHolder( &textureHolder ),
+    fontHolder( &fontHolder )
     {
     }
 }}

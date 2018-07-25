@@ -30,9 +30,7 @@ namespace Input
     }
 
     bool InputManager::keyActive( Shock::Input::KAI key )
-    {
-        return _keyboardMap.isActive( key ) ;
-    }
+    { return _keyboardMap.isActive( key ) ; }
 
     void InputManager::initKeys()
     {

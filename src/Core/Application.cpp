@@ -7,6 +7,8 @@
 #include "../../include/States/GameState.hpp"
 #include "../../include/States/PauseState.hpp"
 
+#include "../../include/Render/Diagnostics.hpp"
+
 #include <SFML/Window/Event.hpp>
 
 namespace Shock
@@ -20,11 +22,26 @@ namespace Core
         _stateStack.registerState<States::GameState>( StateIds::Game ) ;
     }
 
+    void Application::loadResources()
+    {
+        using namespace Resource ;
+
+        _fontHolder.load( Fonts::Default, "assets/Prototype.ttf" ) ;
+    }
+
+    void Application::loadRenderedObjects()
+    {
+        using namespace Render ;
+
+        _renderedObjectManager.addRenderedObject( "Diagnostics",
+                                                  std::unique_ptr<Diagnostics>( new Diagnostics( _fontHolder ) ) ) ;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////
 
     Application::Application() :
     _stateStack( State::Context( _contextBuffer ) ),
-    _contextBuffer( _renderWindow, _inputManager ),
+    _contextBuffer( _renderWindow, _inputManager, _textureHolder, _fontHolder ),
     _maxFps( 60 )
     {
         sf::Uint32 style = sf::Style::Titlebar | sf::Style::Close ;
@@ -36,6 +53,8 @@ namespace Core
         _renderWindow.setKeyRepeatEnabled( false ) ;
 
         registerStates() ;
+        loadResources() ;
+        loadRenderedObjects() ;
 
         _stateStack.pushState( StateIds::Game ) ;
     }
@@ -50,19 +69,24 @@ namespace Core
 
         while ( _renderWindow.pollEvent( event ) )
         {
-            _inputManager.pushEvent( event );
-            _inputManager.processInput();
+            _inputManager.pushEvent( event ) ;
+
+            _inputManager.processInput() ;
 
             _stateStack.handleEvent( event ) ;
 
             if ( event.type == sf::Event::Closed )
             { quit(); }
         }
+
+        _renderedObjectManager.handleEvent( _inputManager ) ;
     }
 
     void Application::update( sf::Time dt )
     {
         _stateStack.update( dt ) ;
+
+        _renderedObjectManager.update( dt ) ;
     }
 
     void Application::render()
@@ -70,6 +94,8 @@ namespace Core
         _renderWindow.clear() ;
 
         _stateStack.draw() ;
+
+        _renderedObjectManager.draw( _renderWindow ) ;
 
         _renderWindow.setView( _renderWindow.getDefaultView() ) ;
 
@@ -89,7 +115,7 @@ namespace Core
     const float Application::getMaxFps() const
     { return _maxFps ; }
 
-    const float Application::setMaxFps( const float value )
+    const void Application::setMaxFps( const float value )
     { _maxFps = value ; }
 
     ////////////////////////////////////////////////////////////////////////////////////////

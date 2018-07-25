@@ -6,9 +6,13 @@
 #define SHOCKENGINE_APPLICATION_HPP
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Font.hpp>
 
 #include "StateStack.hpp"
 #include "../Input/InputManager.hpp"
+#include "../Resource/ResourceHolder.hpp"
+#include "../Resource/ResourceIdentifiers.hpp"
+#include "../Render/RenderedObjectManager.hpp"
 
 namespace Shock
 {
@@ -18,6 +22,8 @@ namespace Core
     {
     private:
         void registerStates() ;
+        void loadResources() ;
+        void loadRenderedObjects() ;
 
     private:
         sf::RenderWindow _renderWindow ;
@@ -30,6 +36,11 @@ namespace Core
 
         //Engine managers
         Input::InputManager _inputManager ;
+        Render::RenderedObjectManager _renderedObjectManager ;
+
+        //Resources
+        Resource::ResourceHolder<sf::Texture, Resource::Textures> _textureHolder ;
+        Resource::ResourceHolder<sf::Font, Resource::Fonts>       _fontHolder ;
 
         float _maxFps ;
 
@@ -44,7 +55,7 @@ namespace Core
         const void quit() ;
 
         const float getMaxFps() const ;
-        const float setMaxFps( const float value ) ;
+        const void setMaxFps( const float value ) ;
     } ;
 }}
 

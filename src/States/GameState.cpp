@@ -17,8 +17,6 @@ namespace States
     {
         Input::InputManager& inputManager = *getContext().buffer->inputManager ;
 
-
-
         return false;
     }
 
