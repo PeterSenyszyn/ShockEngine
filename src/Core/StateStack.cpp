@@ -122,9 +122,7 @@ namespace Core
     }
 
     bool StateStack::isEmpty() const
-    {
-        return _stack.empty() ;
-    }
+    { return _stack.empty() ; }
 
     ///////////////////////////////////////////////////////////////////////
 }}

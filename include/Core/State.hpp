@@ -41,8 +41,6 @@ namespace Core
 
         Context getContext() const ;
 
-        const std::string& getStateName() ;
-
     public:
         State( StateStack& stack, Context context ) ;
         virtual ~State() = default ;

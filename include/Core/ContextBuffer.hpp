@@ -8,14 +8,18 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Font.hpp>
 
+
 #include "../Input/InputManager.hpp"
 #include "../Resource/ResourceHolder.hpp"
 #include "../Resource/ResourceIdentifiers.hpp"
+#include "../Render/RenderedObjectManager.hpp"
 
 namespace Shock
 {
 namespace Core
 {
+    class StateStack ;
+
     //Holds all pointers to various managers and other
     //necessary objects for the states
     struct ContextBuffer
@@ -24,15 +28,21 @@ namespace Core
         typedef Resource::ResourceHolder<sf::Font, Resource::Fonts> FontHolder ;
 
         ContextBuffer( sf::RenderWindow& window,
+                       StateStack& stateStack,
                        Input::InputManager& inputManager,
+                       Render::RenderedObjectManager& renderedObjectManager,
                        TextureHolder& textureHolder,
                        FontHolder& fontHolder ) ;
 
         //SFML
         sf::RenderWindow* window ;
 
+        //Statestack
+        StateStack* stateStack ;
+
         //Managers
         Input::InputManager* inputManager ;
+        Render::RenderedObjectManager* renderedObjectManager ;
 
         //Resources
         TextureHolder* textureHolder ;

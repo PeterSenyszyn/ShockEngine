@@ -64,4 +64,7 @@ namespace Render
             }
         }
     }
+
+    unsigned long RenderedObjectManager::getNumRenderedObjects() const
+    { return _objects.size() ; }
 }}

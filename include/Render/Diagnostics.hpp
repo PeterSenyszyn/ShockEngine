@@ -8,8 +8,7 @@
 #include <SFML/Graphics/Text.hpp>
 
 #include "RenderedObject.hpp"
-#include "../Resource/ResourceHolder.hpp"
-#include "../Resource/ResourceIdentifiers.hpp"
+#include "../Core/ContextBuffer.hpp"
 
 namespace Shock
 {
@@ -28,14 +27,18 @@ namespace Render
         } ;
 
     private:
+        Core::ContextBuffer* _contextBufferContext ;
+
         ScreenPosition _screenPosition ;
 
         sf::Text _fpsText ;
         sf::Time _updateTime ;
         std::size_t _numFrames ;
 
+        sf::Text _numRenderedObjectsText ;
+
     public:
-        Diagnostics( Resource::ResourceHolder<sf::Font, Resource::Fonts>& resourceHolder ) ;
+        Diagnostics( Core::ContextBuffer& contextBuffer ) ;
 
         void handleEvent( Input::InputManager& inputManager ) override ;
         void update( sf::Time dt ) override ;

@@ -34,14 +34,15 @@ namespace Core
         using namespace Render ;
 
         _renderedObjectManager.addRenderedObject( "Diagnostics",
-                                                  std::unique_ptr<Diagnostics>( new Diagnostics( _fontHolder ) ) ) ;
+                                                  std::unique_ptr<Diagnostics>( new Diagnostics( _contextBuffer ) ) ) ;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////
 
     Application::Application() :
     _stateStack( State::Context( _contextBuffer ) ),
-    _contextBuffer( _renderWindow, _inputManager, _textureHolder, _fontHolder ),
+    _contextBuffer( _renderWindow, _stateStack, _inputManager, _renderedObjectManager,
+                    _textureHolder, _fontHolder ),
     _maxFps( 60 )
     {
         sf::Uint32 style = sf::Style::Titlebar | sf::Style::Close ;

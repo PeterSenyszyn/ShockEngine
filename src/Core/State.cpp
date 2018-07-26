@@ -38,11 +38,6 @@ namespace Core
         return _context ;
     }
 
-    const std::string& State::getStateName()
-    {
-        return typeid( this ).name() ;
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////
 
     State::State( StateStack& stack, Context context ) :

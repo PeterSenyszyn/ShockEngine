@@ -31,6 +31,8 @@ namespace Render
         void handleEvent( Input::InputManager& inputManager ) ;
         void update( sf::Time dt ) ;
         void draw( sf::RenderWindow& window ) ;
+
+        unsigned long getNumRenderedObjects() const ;
     } ;
 }}
 
