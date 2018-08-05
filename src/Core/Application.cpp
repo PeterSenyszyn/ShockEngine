@@ -37,6 +37,20 @@ namespace Core
                                                   std::unique_ptr<Diagnostics>( new Diagnostics( _contextBuffer ) ) ) ;
     }
 
+    void Application::initGui()
+    {
+        auto font = std::make_shared<sf::Font>( _fontHolder.get( Resource::Fonts::Default ) ) ;
+
+        _desktop.GetEngine().GetResourceManager().SetDefaultFont( font ) ;
+
+        auto window = sfg::Window::Create() ;
+        window->SetTitle( "test" ) ;
+
+        _desktop.Add( window ) ;
+
+        _desktop.Refresh() ;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////
 
     Application::Application() :
@@ -47,15 +61,25 @@ namespace Core
     {
         sf::Uint32 style = sf::Style::Titlebar | sf::Style::Close ;
 
-        _renderWindow.create( sf::VideoMode( 800, 600 ), "Shock Engine",
-                              style ) ;
+        sf::ContextSettings settings ;
+        settings.majorVersion = 4 ;
+        settings.minorVersion = 1 ;
 
-        _renderWindow.resetGLStates() ;
+        _renderWindow.create( sf::VideoMode( 1920, 1080 ), "Shock Engine",
+                              style, settings ) ;
+
+        settings = _renderWindow.getSettings() ;
+
+        std::cout << "version: " << settings.majorVersion << "." << settings.minorVersion << std::endl;
+
+        //_renderWindow.resetGLStates() ;
         _renderWindow.setKeyRepeatEnabled( false ) ;
+        //_renderWindow.setVerticalSyncEnabled( true ) ;
 
         registerStates() ;
         loadResources() ;
         loadRenderedObjects() ;
+        initGui() ;
 
         _stateStack.pushState( StateIds::Game ) ;
     }
@@ -76,29 +100,35 @@ namespace Core
 
             _stateStack.handleEvent( event ) ;
 
+            _desktop.HandleEvent( event ) ;
+
             if ( event.type == sf::Event::Closed )
             { quit(); }
         }
 
-        _renderedObjectManager.handleEvent( _inputManager ) ;
+        //_renderedObjectManager.handleEvent( _inputManager ) ;
     }
 
     void Application::update( sf::Time dt )
     {
         _stateStack.update( dt ) ;
 
-        _renderedObjectManager.update( dt ) ;
+        //_renderedObjectManager.update( dt ) ;
+
+        _desktop.Update( dt.asSeconds() ) ;
     }
 
     void Application::render()
     {
-        _renderWindow.clear() ;
+        _renderWindow.clear( sf::Color::White ) ;
 
         _stateStack.draw() ;
 
-        _renderedObjectManager.draw( _renderWindow ) ;
+        //_renderedObjectManager.draw( _renderWindow ) ;
 
-        _renderWindow.setView( _renderWindow.getDefaultView() ) ;
+        //_renderWindow.setView( _renderWindow.getDefaultView() ) ;
+
+        _sfgui.Display( _renderWindow ) ;
 
         _renderWindow.display() ;
     }

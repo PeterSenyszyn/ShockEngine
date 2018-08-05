@@ -29,13 +29,13 @@ namespace States
     {
         sf::RenderWindow& window = *getContext().buffer->window ;
 
-        window.setView( window.getDefaultView() ) ;
+        //window.setView( window.getDefaultView() ) ;
 
-        sf::CircleShape shape ;
+        /*sf::CircleShape shape ;
         shape.setFillColor( sf::Color::Blue ) ;
         shape.setRadius( 40.f ) ;
         shape.setPosition( 200, 200 ) ;
 
-        window.draw( shape ) ;
+        window.draw( shape ) ;*/
     }
 }}

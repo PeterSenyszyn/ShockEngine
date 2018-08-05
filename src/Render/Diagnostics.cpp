@@ -24,7 +24,7 @@ namespace Render
         _fpsText.setFillColor( sf::Color::Green ) ;
 
         _numRenderedObjectsText.setFont( font ) ;
-        _numRenderedObjectsText.setString( "RenderedObject count: " ) ;
+        _numRenderedObjectsText.setString( "RO count: " ) ;
         _numRenderedObjectsText.setCharacterSize( 20u ) ;
         _numRenderedObjectsText.setFillColor( sf::Color::Green ) ;
     }
@@ -77,9 +77,7 @@ namespace Render
             _numFrames = 0 ;
         }
 
-        std::cout << _contextBufferContext->renderedObjectManager->getNumRenderedObjects() << std::endl ;
-
-        _numRenderedObjectsText.setString( "RenderedObject count: " + std::to_string( _contextBufferContext->renderedObjectManager->getNumRenderedObjects() ) ) ;
+        _numRenderedObjectsText.setString( "RO count: " + std::to_string( _contextBufferContext->renderedObjectManager->getNumRenderedObjects() ) ) ;
     }
 
     void Diagnostics::render( sf::RenderTarget& target, sf::RenderStates states ) const

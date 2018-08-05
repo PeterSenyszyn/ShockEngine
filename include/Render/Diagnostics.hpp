@@ -38,7 +38,7 @@ namespace Render
         sf::Text _numRenderedObjectsText ;
 
     public:
-        Diagnostics( Core::ContextBuffer& contextBuffer ) ;
+        explicit Diagnostics( Core::ContextBuffer& contextBuffer ) ;
 
         void handleEvent( Input::InputManager& inputManager ) override ;
         void update( sf::Time dt ) override ;

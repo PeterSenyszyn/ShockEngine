@@ -8,6 +8,13 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Font.hpp>
 
+#include <SFGUI/SFGUI.hpp>
+#include <SFGUI/Desktop.hpp>
+#include <SFGUI/Window.hpp>
+#include <SFGUI/Label.hpp>
+#include <SFGUI/Button.hpp>
+#include <SFGUI/Box.hpp>
+
 #include "StateStack.hpp"
 #include "../Input/InputManager.hpp"
 #include "../Resource/ResourceHolder.hpp"
@@ -24,6 +31,7 @@ namespace Core
         void registerStates() ;
         void loadResources() ;
         void loadRenderedObjects() ;
+        void initGui() ;
 
     private:
         sf::RenderWindow _renderWindow ;
@@ -41,6 +49,10 @@ namespace Core
         //Resources
         Resource::ResourceHolder<sf::Texture, Resource::Textures> _textureHolder ;
         Resource::ResourceHolder<sf::Font, Resource::Fonts>       _fontHolder ;
+
+        //SFGUI
+        sfg::SFGUI _sfgui ;
+        sfg::Desktop _desktop ;
 
         float _maxFps ;
 
