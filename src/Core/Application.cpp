@@ -26,7 +26,7 @@ namespace Core
     {
         using namespace Resource ;
 
-        _fontHolder.load( Fonts::Default, "assets/Prototype.ttf" ) ;
+        _fontHolder.load( Fonts::Default, "/home/petersenyszyn/CLionProjects/ShockEngine/assets/Prototype.ttf" ) ;
     }
 
     void Application::loadRenderedObjects()
@@ -70,11 +70,11 @@ namespace Core
 
         settings = _renderWindow.getSettings() ;
 
-        std::cout << "version: " << settings.majorVersion << "." << settings.minorVersion << std::endl;
+        std::cout << "Shock Engine is running OpenGL version: " << settings.majorVersion << "." << settings.minorVersion << std::endl ;
 
-        //_renderWindow.resetGLStates() ;
+        _renderWindow.resetGLStates() ;
         _renderWindow.setKeyRepeatEnabled( false ) ;
-        //_renderWindow.setVerticalSyncEnabled( true ) ;
+        _renderWindow.setVerticalSyncEnabled( true ) ;
 
         registerStates() ;
         loadResources() ;
@@ -106,27 +106,27 @@ namespace Core
             { quit(); }
         }
 
-        //_renderedObjectManager.handleEvent( _inputManager ) ;
+        _renderedObjectManager.handleEvent( _inputManager ) ;
     }
 
     void Application::update( sf::Time dt )
     {
         _stateStack.update( dt ) ;
 
-        //_renderedObjectManager.update( dt ) ;
+        _renderedObjectManager.update( dt ) ;
 
         _desktop.Update( dt.asSeconds() ) ;
     }
 
     void Application::render()
     {
-        _renderWindow.clear( sf::Color::White ) ;
+        _renderWindow.clear( sf::Color::Black ) ;
 
         _stateStack.draw() ;
 
-        //_renderedObjectManager.draw( _renderWindow ) ;
+        _renderedObjectManager.draw( _renderWindow ) ;
 
-        //_renderWindow.setView( _renderWindow.getDefaultView() ) ;
+        _renderWindow.setView( _renderWindow.getDefaultView() ) ;
 
         _sfgui.Display( _renderWindow ) ;
 

@@ -26,7 +26,7 @@ namespace Render
 
     public:
         explicit RenderedObject() ;
-        virtual ~RenderedObject() = default ;
+        ~RenderedObject() override = default ;
 
         virtual void applyCustomTransforms( sf::RenderStates states ) const ;
         virtual void handleEvent( Input::InputManager& inputManager ) = 0 ;
