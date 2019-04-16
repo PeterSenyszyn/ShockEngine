@@ -14,7 +14,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 
 #include "RenderedObject.hpp"
-#include "../Utilities/Matrix.hpp"
+#include "../Utilities/MathUtils/Matrix.hpp"
 
 namespace Shock
 {

@@ -9,7 +9,7 @@
 
 namespace Shock
 {
-namespace StringUtils
+namespace Utils
 {
     //Check if string has certain file ending (mostly for file extension checking)
     bool hasEnding( const std::string& fullString, const std::string& ending )

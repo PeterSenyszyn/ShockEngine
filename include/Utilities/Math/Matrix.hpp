@@ -10,7 +10,7 @@
 
 namespace Shock
 {
-namespace MathUtils
+namespace Utils
 {
     template <class T>
     class Matrix2D

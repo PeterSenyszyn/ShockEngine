@@ -3,7 +3,7 @@
 //
 
 #include "../../include/Render/TileMap.hpp"
-#include "../../include/Utilities/StringUtils.hpp"
+#include "../../include/Utilities/String/StringUtils.hpp"
 
 #include <fstream>
 #include <iostream>
