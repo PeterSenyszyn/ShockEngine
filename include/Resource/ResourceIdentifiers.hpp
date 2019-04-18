@@ -13,7 +13,7 @@ namespace Resource
     //loaded at runtime?
     enum class Textures
     {
-
+        Player
     } ;
 
     enum class Fonts

@@ -27,8 +27,6 @@ namespace Game
     void Player::handleEvent( Input::InputManager& inputManager )
     {
         Entity::handleEvent( inputManager ) ;
-
-
     }
 
     void Player::update( sf::Time dt )
@@ -39,6 +37,8 @@ namespace Game
     void Player::render( sf::RenderTarget& target, sf::RenderStates states ) const
     {
         Entity::render( target, states ) ;
+
+        target.draw( _sprite, states ) ;
     }
 
     void Player::attachComponents()

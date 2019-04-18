@@ -34,9 +34,7 @@
  * 0, 0, 1, 0, 3, 2, 2, 2, 0, 0, 0, 0, 1, 1, 1, 1
  */
 
-namespace Shock
-{
-namespace Render
+namespace Shock::Render
 {
     TileMap::TileMap() :
     _tilesetPath( "" ),
@@ -195,4 +193,4 @@ namespace Render
 
         return true ;
     }
-}}
+}

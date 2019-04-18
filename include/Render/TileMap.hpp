@@ -16,9 +16,7 @@
 #include "RenderedObject.hpp"
 #include "../Utilities/Math/Matrix.hpp"
 
-namespace Shock
-{
-namespace Render
+namespace Shock::Render
 {
     class TileMap : public RenderedObject
     {
@@ -49,6 +47,6 @@ namespace Render
         bool analyzeFile( std::ifstream& file ) ;
         bool createTileMap() ;
     } ;
-}}
+}
 
 #endif //SHOCKENGINE_TILEMAP_HPP

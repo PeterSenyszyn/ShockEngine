@@ -7,6 +7,7 @@
 
 #include "../Core/ContextBuffer.hpp"
 #include "Instance.hpp"
+#include "Player.hpp"
 
 namespace Shock
 {
@@ -30,6 +31,8 @@ namespace Game
         Core::ContextBuffer* _context ;
 
         std::vector<Instance::Ptr> _instances ;
+
+        Player _player ;
     } ;
 }}
 

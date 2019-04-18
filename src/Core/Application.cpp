@@ -28,6 +28,9 @@ namespace Core
 
         _fontHolder.load( Fonts::Default, "/home/petersenyszyn/CLionProjects/ShockEngine/assets/Prototype.ttf" ) ;
         //_fontHolder.load( Fonts::Default, "/Users/petersenyszyn/Documents/ShockEngine/assets/Prototype.ttf" ) ;
+
+        //Player
+        _textureHolder.load( Textures::Player, "/home/petersenyszyn/CLionProjects/ShockEngine/assets/player_temp.png" ) ;
     }
 
     void Application::loadRenderedObjects()
@@ -89,7 +92,7 @@ namespace Core
 
     void Application::processInput()
     {
-        sf::Event event ;
+        sf::Event event = sf::Event() ;
 
         _inputManager.clearEvents() ;
 

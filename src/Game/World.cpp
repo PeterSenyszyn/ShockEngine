@@ -9,7 +9,8 @@ namespace Shock
 namespace Game
 {
     World::World( Core::ContextBuffer* context ) :
-    _context( context )
+    _context( context ),
+    _player( &_context->textureHolder->get( Resource::Textures::Player ) )
     {
 
     }
@@ -18,6 +19,8 @@ namespace Game
     {
         for ( const auto& iter : _instances )
             iter->handleEvent( inputManager ) ;
+
+        _player.handleEvent( inputManager ) ;
     }
 
     void World::update( sf::Time dt )
@@ -28,12 +31,16 @@ namespace Game
 
             (*iter)->update( dt ) ;
         }
+
+        _player.update( dt ) ;
     }
 
     void World::render( sf::RenderTarget& target, sf::RenderStates states )
     {
         for ( const auto& iter : _instances )
             iter->render( target, states ) ;
+
+        _player.render( target, states ) ;
     }
 
     void World::addInstance( Instance::Ptr instance )

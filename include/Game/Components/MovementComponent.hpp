@@ -38,16 +38,10 @@ namespace Shock::Game
 
         //Keycodes for different directions
         //4 cardinal directions
-        KAI  _upKey ;                               //vector ( xDelta = 0, yDelta > 0 )
+        KAI  _upKey ;                               //vector ( xDelta = 0, yDelta < 0 )
         KAI  _leftKey ;                             //vector ( xDelta < 0, yDelta = 0 )
-        KAI  _downKey ;                             //vector ( xDelta = 0, yDelta < 0 )
+        KAI  _downKey ;                             //vector ( xDelta = 0, yDelta > 0 )
         KAI  _rightKey ;                            //vector ( xDelta > 0, yDelta = 0 )
-
-        //Now the diagonals
-        std::tuple<KAI, KAI> _upLeftDiagKey ;       //vector ( xDelta < 0, yDelta > 0 )
-        std::tuple<KAI, KAI> _downLeftDiagKey ;     //vector ( xDelta < 0, yDelta < 0 )
-        std::tuple<KAI, KAI> _downRightDiagKey ;    //vector ( xDelta > 0, yDelta < 0 )
-        std::tuple<KAI, KAI> _upRightDiagKey ;      //vector ( xDelta > 0, yDelta > 0 )
     } ;
 }
 

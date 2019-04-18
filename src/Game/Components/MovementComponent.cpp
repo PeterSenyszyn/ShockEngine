@@ -19,36 +19,22 @@ namespace Shock::Game
 
     void MovementComponent::handleEvent( Input::InputManager& inputManager )
     {
+        _velocityVector = sf::Vector2f() ;
+
         //Lambdas to shorten ifs
         auto active     = [&]( auto& key ) { return inputManager.keyActive( key ) ; } ;
-        auto activeDiag = [&]( auto& tuple )
-        {
-            return active( std::get<0>( tuple ) ) && active( std::get<1>( tuple ) ) ;
-        } ;
 
         if ( active( _upKey ) )
-            _velocityVector = sf::Vector2f( 0.f, _speedVector.y ) ;
+            _velocityVector += sf::Vector2f( 0.f, -_speedVector.y ) ;
 
-        else if ( active( _leftKey ) )
-            _velocityVector = sf::Vector2f( -_speedVector.x, 0.f ) ;
+        if ( active( _leftKey ) )
+            _velocityVector += sf::Vector2f( -_speedVector.x, 0.f ) ;
 
-        else if ( active( _downKey ) )
-            _velocityVector = sf::Vector2f( 0.f, -_speedVector.y ) ;
+        if ( active( _downKey ) )
+            _velocityVector += sf::Vector2f( 0.f, _speedVector.y ) ;
 
-        else if ( active( _rightKey ) )
-            _velocityVector = sf::Vector2f( _speedVector.x, 0.f ) ;
-
-        else if ( activeDiag( _upLeftDiagKey ) )
-            _velocityVector = sf::Vector2f( -_speedVector.x, _speedVector.y ) ;
-
-        else if ( activeDiag( _downLeftDiagKey ) )
-            _velocityVector = sf::Vector2f( -_speedVector.x, -_speedVector.y ) ;
-
-        else if ( activeDiag( _downRightDiagKey ) )
-            _velocityVector = sf::Vector2f( _speedVector.x, -_speedVector.y ) ;
-
-        else if ( activeDiag( _upRightDiagKey ) )
-            _velocityVector = sf::Vector2f( _speedVector.x, _speedVector.y ) ;
+        if ( active( _rightKey ) )
+            _velocityVector += sf::Vector2f( _speedVector.x, 0.f ) ;
     }
 
     void MovementComponent::update( sf::Time dt )
@@ -62,10 +48,5 @@ namespace Shock::Game
         _leftKey  = leftKey ;
         _downKey  = downKey ;
         _rightKey = rightKey ;
-
-        _upLeftDiagKey      = std::make_tuple( _upKey, _leftKey ) ;
-        _downLeftDiagKey    = std::make_tuple( _downKey, _leftKey ) ;
-        _downRightDiagKey   = std::make_tuple( _downKey, _rightKey ) ;
-        _upRightDiagKey     = std::make_tuple( _upKey, _rightKey ) ;
     }
 }
