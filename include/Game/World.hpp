@@ -17,6 +17,10 @@ namespace Game
     public:
         World( Core::ContextBuffer* context ) ;
 
+        void handleEvent( Input::InputManager& inputManager ) ;
+        void update( sf::Time dt ) ;
+        void render( sf::RenderTarget& target, sf::RenderStates states ) ;
+
     private:
         Core::ContextBuffer* _context ;
 

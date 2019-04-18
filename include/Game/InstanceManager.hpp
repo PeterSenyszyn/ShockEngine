@@ -20,6 +20,14 @@ namespace Game
     class InstanceManager
     {
     public:
+        void handleEvent( Input::InputManager& inputManager ) ;
+        void update( sf::Time dt ) ;
+        void render( sf::RenderTarget& target, sf::RenderStates states ) ;
+
+        void addInstance( Instance::Ptr instance ) ;
+
+    private:
+        void cleanInstances( std::vector<Instance::Ptr>::iterator iter ) ;
 
     private:
         std::vector<Instance::Ptr> _instances ;

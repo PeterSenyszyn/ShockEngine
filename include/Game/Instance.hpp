@@ -23,8 +23,18 @@ namespace Game
         typedef std::unique_ptr<Instance> Ptr ;
 
     public:
+        void handleEvent( Input::InputManager& inputManager ) ;
+        void update( sf::Time dt ) ;
+        void render( sf::RenderTarget& target, sf::RenderStates states ) ;
+
+        const void markForDeletion( bool value ) ;
+        const bool needsDelete() const ;
 
     private:
+        //Instances are designed to live within InstanceManager indefinitely, so when we want to clean up
+        //we'll mark this flag
+        bool _delete ;
+
         std::vector<Entity::Ptr> _entities ;
 
     private:

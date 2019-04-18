@@ -13,4 +13,19 @@ namespace Game
     {
 
     }
+
+    void World::handleEvent( Input::InputManager& inputManager )
+    {
+        _instanceManager.handleEvent( inputManager ) ;
+    }
+
+    void World::update( sf::Time dt )
+    {
+        _instanceManager.update( dt ) ;
+    }
+
+    void World::render( sf::RenderTarget& target, sf::RenderStates states )
+    {
+        _instanceManager.render( target, states ) ;
+    }
 }}
