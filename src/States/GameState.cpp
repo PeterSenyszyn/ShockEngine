@@ -9,19 +9,24 @@ namespace Shock
 namespace States
 {
     GameState::GameState( Core::StateStack& stack, Context context ) :
-    Core::State( stack, context )
+    Core::State( stack, context ),
+    _world( context.buffer )
     {
     }
 
-    bool GameState::handleEvent( const sf::Event &event )
+    bool GameState::handleEvent( const sf::Event& event )
     {
         Input::InputManager& inputManager = *getContext().buffer->inputManager ;
+
+        _world.handleEvent( inputManager ) ;
 
         return false;
     }
 
     bool GameState::update( sf::Time dt )
     {
+        _world.update( dt ) ;
+
         return false;
     }
 
@@ -29,9 +34,11 @@ namespace States
     {
         sf::RenderWindow& window = *getContext().buffer->window ;
 
-        //window.setView( window.getDefaultView() ) ;
+        _world.render( window, sf::RenderStates() ) ;
 
-        /*sf::CircleShape shape ;
+        /*window.setView( window.getDefaultView() ) ;
+
+        sf::CircleShape shape ;
         shape.setFillColor( sf::Color::Blue ) ;
         shape.setRadius( 40.f ) ;
         shape.setPosition( 200, 200 ) ;
