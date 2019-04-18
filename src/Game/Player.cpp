@@ -26,26 +26,7 @@ namespace Game
     {
         Entity::handleEvent( inputManager ) ;
 
-        using namespace Shock::Input ;
-        if ( inputManager.keyActive( KAI::WHOLD ) )
-        {
 
-        }
-
-        else if ( inputManager.keyActive( KAI::AHOLD ) )
-        {
-
-        }
-
-        else if ( inputManager.keyActive( KAI::SHOLD ) )
-        {
-
-        }
-
-        else if ( inputManager.keyActive( KAI::DHOLD ) )
-        {
-
-        }
     }
 
     void Player::update( sf::Time dt )
