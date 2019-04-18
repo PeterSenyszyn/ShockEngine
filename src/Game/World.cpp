@@ -16,16 +16,34 @@ namespace Game
 
     void World::handleEvent( Input::InputManager& inputManager )
     {
-        _instanceManager.handleEvent( inputManager ) ;
+        for ( const auto& iter : _instances )
+            iter->handleEvent( inputManager ) ;
     }
 
     void World::update( sf::Time dt )
     {
-        _instanceManager.update( dt ) ;
+        for ( auto iter = _instances.begin() ; iter != _instances.end() ; iter++ )
+        {
+            cleanInstances( iter ) ;
+
+            (*iter)->update( dt ) ;
+        }
     }
 
     void World::render( sf::RenderTarget& target, sf::RenderStates states )
     {
-        _instanceManager.render( target, states ) ;
+        for ( const auto& iter : _instances )
+            iter->render( target, states ) ;
+    }
+
+    void World::addInstance( Instance::Ptr instance )
+    {
+        _instances.push_back( std::move( instance ) ) ;
+    }
+
+    void World::cleanInstances( std::vector<Instance::Ptr>::iterator iter )
+    {
+        if ( (*iter)->needsDelete() )
+            _instances.erase( iter ) ;
     }
 }}

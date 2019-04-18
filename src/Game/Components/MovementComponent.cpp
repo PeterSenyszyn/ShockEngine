@@ -19,7 +19,7 @@ namespace Shock::Game
 
     void MovementComponent::handleEvent( Input::InputManager& inputManager )
     {
-        //Lambda to shorten ifs
+        //Lambdas to shorten ifs
         auto active     = [&]( auto& key ) { return inputManager.keyActive( key ) ; } ;
         auto activeDiag = [&]( auto& tuple )
         {

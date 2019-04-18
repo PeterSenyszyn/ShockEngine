@@ -21,6 +21,7 @@
 //Example below:
 /* assets/blah.png
  * 32
+ * 32
  * 16
  * 8
  * 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -47,12 +48,14 @@ namespace Render
     bool TileMap::load( const std::string& tilemapPath )
     {
         //Make sure path has .stm as file extension
-        if ( !StringUtils::hasEnding( tilemapPath, ".stm" ) )
+        if ( !Utils::hasEnding( tilemapPath, ".stm" ) )
         {
             std::cout << "Unable to load tilemap path: " << tilemapPath << ", wrong file extension!" << std::endl ;
 
             return false;
         }
+
+        _tilesetPath = tilemapPath ;
 
         std::ifstream file( tilemapPath ) ;
 
@@ -68,19 +71,24 @@ namespace Render
         //Now we want to get tile data (delimited by commas)
 
         std::string lineBuffer ;
-
         unsigned int lineIter = 0 ;
-        while ( std::getline( file, lineBuffer, ',' ) )
+        while ( std::getline( file, lineBuffer ) )
         {
-            std::istringstream iss( lineBuffer ) ;
+            std::stringstream linestream( lineBuffer ) ;
+            std::string tileValue ;
 
-            for ( unsigned int i = 0 ; i < _tilemapSize.x ; i++ )
+            unsigned int colIter = 0 ;
+            while ( std::getline( linestream, tileValue, ',' ) )
             {
-                iss >> _tileData( i, lineIter ) ;
+                _tileData( colIter, lineIter ) = std::stoi( tileValue ) ;
+
+                colIter++ ;
             }
 
             lineIter++ ;
         }
+
+        createTileMap() ;
 
         return true ;
     }
@@ -104,7 +112,13 @@ namespace Render
     bool TileMap::analyzeFile( std::ifstream& file )
     {
         auto lineCount = std::count( std::istreambuf_iterator<char>( file ),
-                                     std::istreambuf_iterator<char>(), '\n' ) ;
+                                     std::istreambuf_iterator<char>(), '\n' ) + 1 ;
+
+        //Rewind file back to beginning
+        file.clear() ;
+        file.seekg( 0, std::ios::beg ) ;
+
+        //auto lineCount = 29 ;
 
         if ( lineCount > PRE_TILEMAP_DEF_LINE_COUNT )
         {
@@ -122,11 +136,18 @@ namespace Render
             _tileSize.x    = std::stoi( lineBuffer[1] ) ;
             _tileSize.y    = std::stoi( lineBuffer[2] ) ;
             _tilemapSize.x = std::stoi( lineBuffer[3] ) ;
-            _tilemapSize.x = std::stoi( lineBuffer[4] ) ;
+            _tilemapSize.y = std::stoi( lineBuffer[4] ) ;
+
+            _tileData = Utils::Matrix2D<int>( _tilemapSize.x, _tileSize.y ) ;
 
             //Ensure file has correct number of lines (PRE_TILEMAP_DEF_LINE_COUNT + tilemapSize.y)
             if ( lineCount == PRE_TILEMAP_DEF_LINE_COUNT + _tilemapSize.y )
                 return true ;
+        }
+
+        else
+        {
+
         }
 
         return false ;
@@ -134,8 +155,12 @@ namespace Render
 
     bool TileMap::createTileMap()
     {
-        if ( _tileset.loadFromFile( _tilesetPath ) )
+        if ( !_tileset.loadFromFile( _tilesetPath ) )
+        {
+            std::cout << "Could not load tileset from path: " << _tilesetPath << std::endl ;
+
             return false ;
+        }
 
         //Resize vertex array to fit map size
         _vertices.setPrimitiveType( sf::Quads ) ;
@@ -146,7 +171,6 @@ namespace Render
         {
             for ( unsigned int j = 0 ; j < _tilemapSize.y ; j++ )
             {
-                //int tileNumber = _tileData[i + j * _tilemapSize.x] ;
                 int tileNumber = _tileData( i, j ) ;
 
                 //Find uv coordinate

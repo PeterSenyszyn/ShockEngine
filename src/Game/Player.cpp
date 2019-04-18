@@ -20,6 +20,8 @@ namespace Game
         {
             std::cout << "Warning: Player object created with nullptr texture!" << std::endl ;
         }
+
+        attachComponents() ;
     }
 
     void Player::handleEvent( Input::InputManager& inputManager )
@@ -37,5 +39,13 @@ namespace Game
     void Player::render( sf::RenderTarget& target, sf::RenderStates states ) const
     {
         Entity::render( target, states ) ;
+    }
+
+    void Player::attachComponents()
+    {
+        auto movement = std::make_unique<MovementComponent>( sf::Vector2f( _playerSpeedPX, _playerSpeedPX ), &_sprite ) ;
+        movement->setHotKeys( KAI::WHOLD, KAI::AHOLD, KAI::SHOLD, KAI::DHOLD ) ; //Redundant, but keep here as reminder
+
+        addComponent( std::move( movement ) ) ;
     }
 }}

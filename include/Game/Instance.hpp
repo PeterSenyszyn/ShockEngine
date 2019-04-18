@@ -8,14 +8,13 @@
 #include <vector>
 
 #include "Entity.hpp"
+#include "../Render/TileMap.hpp"
 
 /*
  * An Instance represents the "level" as you could imagine in the game.
  */
 
-namespace Shock
-{
-namespace Game
+namespace Shock::Game
 {
     class Instance
     {
@@ -23,27 +22,26 @@ namespace Game
         typedef std::unique_ptr<Instance> Ptr ;
 
     public:
+        explicit Instance() ;
+
         void handleEvent( Input::InputManager& inputManager ) ;
         void update( sf::Time dt ) ;
         void render( sf::RenderTarget& target, sf::RenderStates states ) ;
+
+        void addTilemap( const std::string& mapPath ) ;
 
         const void markForDeletion( bool value ) ;
         const bool needsDelete() const ;
 
     private:
-        //Instances are designed to live within InstanceManager indefinitely, so when we want to clean up
+        //Instances are designed to live within World indefinitely, so when we want to clean up
         //we'll mark this flag
         bool _delete ;
 
         std::vector<Entity::Ptr> _entities ;
 
-    private:
-        explicit Instance() ;
-
-        //We want Instance header declaration open to import (instead of hidden within InstanceManager)
-        //but don't want any facility to instantiate Instance's from outside of InstanceManager
-        friend class InstanceManager ;
+        std::unique_ptr<Render::TileMap> _tilemap ;
     } ;
-}}
+}
 
 #endif //SHOCKENGINE_INSTANCE_HPP

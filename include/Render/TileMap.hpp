@@ -14,7 +14,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 
 #include "RenderedObject.hpp"
-#include "../Utilities/MathUtils/Matrix.hpp"
+#include "../Utilities/Math/Matrix.hpp"
 
 namespace Shock
 {
@@ -43,7 +43,7 @@ namespace Render
         std::string              _tilesetPath ;
         sf::Vector2i             _tileSize ;
         sf::Vector2i             _tilemapSize ;
-        MathUtils::Matrix2D<int> _tileData ;
+        Utils::Matrix2D<int>     _tileData ;
 
     private:
         bool analyzeFile( std::ifstream& file ) ;

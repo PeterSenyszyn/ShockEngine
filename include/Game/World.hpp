@@ -6,7 +6,7 @@
 #define SHOCKENGINE_WORLD_HPP
 
 #include "../Core/ContextBuffer.hpp"
-#include "InstanceManager.hpp"
+#include "Instance.hpp"
 
 namespace Shock
 {
@@ -21,10 +21,15 @@ namespace Game
         void update( sf::Time dt ) ;
         void render( sf::RenderTarget& target, sf::RenderStates states ) ;
 
+        void addInstance( Instance::Ptr instance ) ;
+
+    private:
+        void cleanInstances( std::vector<Instance::Ptr>::iterator iter ) ;
+
     private:
         Core::ContextBuffer* _context ;
 
-        InstanceManager _instanceManager ;
+        std::vector<Instance::Ptr> _instances ;
     } ;
 }}
 

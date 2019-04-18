@@ -26,8 +26,8 @@ namespace Core
     {
         using namespace Resource ;
 
-        //_fontHolder.load( Fonts::Default, "/home/petersenyszyn/CLionProjects/ShockEngine/assets/Prototype.ttf" ) ;
-        _fontHolder.load( Fonts::Default, "/Users/petersenyszyn/Documents/ShockEngine/assets/Prototype.ttf" ) ;
+        _fontHolder.load( Fonts::Default, "/home/petersenyszyn/CLionProjects/ShockEngine/assets/Prototype.ttf" ) ;
+        //_fontHolder.load( Fonts::Default, "/Users/petersenyszyn/Documents/ShockEngine/assets/Prototype.ttf" ) ;
     }
 
     void Application::loadRenderedObjects()

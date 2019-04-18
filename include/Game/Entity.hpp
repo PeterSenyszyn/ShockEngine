@@ -10,10 +10,9 @@
 #include <SFML/Window/Event.hpp>
 
 #include "../Render/RenderedObject.hpp"
+#include "Components/Component.hpp"
 
-namespace Shock
-{
-namespace Game
+namespace Shock::Game
 {
     //Designed to represent in-game rendered objects
     //Examples: player(s), enemies, AI's, isolated objects (like rocks) etc
@@ -35,11 +34,11 @@ namespace Game
 
         template <class T> static Ptr create() ;
 
-        void addComponent() ;
+        void addComponent( std::unique_ptr<Component> component ) ;
 
     private:
-
+        std::vector<std::unique_ptr<Component> > _components ;
     } ;
-}}
+}
 
 #endif //SHOCKENGINE_ENTITY_HPP

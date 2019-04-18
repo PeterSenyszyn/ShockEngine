@@ -13,6 +13,11 @@ namespace States
     Core::State( stack, context ),
     _world( context.buffer )
     {
+        using namespace Game ;
+        //Create first instance
+        Instance::Ptr instance = std::make_unique<Instance>() ;
+        instance->addTilemap( "/home/petersenyszyn/CLionProjects/ShockEngine/mapdata/test.stm" ) ;
+        _world.addInstance( std::move( instance ) ) ;
     }
 
     bool GameState::handleEvent( const sf::Event& event )

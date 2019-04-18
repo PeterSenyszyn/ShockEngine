@@ -9,6 +9,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "Entity.hpp"
+#include "Components/MovementComponent.hpp"
 
 namespace Shock
 {
@@ -22,16 +23,19 @@ namespace Game
         ~Player() override = default ;
 
         void handleEvent( Input::InputManager& inputManager ) override ;
-
         void update( sf::Time dt ) override ;
-
         void render( sf::RenderTarget& target, sf::RenderStates states ) const override ;
+
+    private:
+        void attachComponents() ;
+
+    //Consts
+    private:
+        const float _playerSpeedPX = 20.f ; //in pixels
 
     private:
         sf::Texture* _texture ;
         sf::Sprite _sprite ;
-
-
     } ;
 }}
 
