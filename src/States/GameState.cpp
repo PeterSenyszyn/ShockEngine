@@ -3,6 +3,7 @@
 //
 
 #include "../../include/States/GameState.hpp"
+#include <SFML/Graphics/CircleShape.hpp>
 
 namespace Shock
 {
@@ -36,9 +37,7 @@ namespace States
 
         _world.render( window, sf::RenderStates() ) ;
 
-        /*window.setView( window.getDefaultView() ) ;
-
-        sf::CircleShape shape ;
+        /*sf::CircleShape shape ;
         shape.setFillColor( sf::Color::Blue ) ;
         shape.setRadius( 40.f ) ;
         shape.setPosition( 200, 200 ) ;
