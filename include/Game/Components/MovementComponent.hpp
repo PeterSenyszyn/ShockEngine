@@ -17,6 +17,7 @@ namespace Shock::Game
     using namespace Shock::Input ; //To simplify key declarations
 
     //Component for player movement
+    //TODO: Add inertia to movement
     class MovementComponent : public Component
     {
     public:

@@ -31,7 +31,7 @@ namespace Game
 
     //Consts
     private:
-        const float _playerSpeedPX = 20.f ; //in pixels
+        const float _playerSpeedPX = 100.f ; //in pixels
 
     private:
         sf::Texture* _texture ;

@@ -6,11 +6,15 @@
 #define SHOCKENGINE_MANAGER_HPP
 
 #include <SFML/System/Time.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
 
 namespace Shock
 {
 namespace Core
 {
+    class InputManager ;
+
     class Manager
     {
     private:
@@ -20,9 +24,9 @@ namespace Core
 
         virtual ~Manager() = default ;
 
-        virtual void processInput() {}
+        virtual void processInput( InputManager& inputManager ) {}
         virtual void update( sf::Time dt ) {}
-        virtual void render() {}
+        virtual void render( sf::RenderTarget& target, sf::RenderStates states ) const {}
     } ;
 }}
 

@@ -22,7 +22,7 @@ namespace Shock::Game
         _velocityVector = sf::Vector2f() ;
 
         //Lambdas to shorten ifs
-        auto active     = [&]( auto& key ) { return inputManager.keyActive( key ) ; } ;
+        auto active = [&]( auto& key ) { return inputManager.keyActive( key ) ; } ;
 
         if ( active( _upKey ) )
             _velocityVector += sf::Vector2f( 0.f, -_speedVector.y ) ;

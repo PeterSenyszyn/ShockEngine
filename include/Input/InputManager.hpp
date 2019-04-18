@@ -7,7 +7,7 @@
 
 #include <Thor/Input/ActionMap.hpp>
 
-#include "../../include/Input/Manager.hpp"
+#include "../Core/Manager.hpp"
 #include "KeyActionIds.hpp"
 
 namespace Shock
@@ -16,7 +16,9 @@ namespace Input
 {
     class InputManager : public Core::Manager
     {
-    public: typedef thor::ActionMap<Input::KAI> KeyboardMap ;
+    public:
+        typedef thor::ActionMap<Input::KAI> KeyboardMap ;
+
     private:
         KeyboardMap _keyboardMap ;
 
@@ -25,8 +27,6 @@ namespace Input
 
     public:
         InputManager() ;
-
-        void processInput() override ;
 
         ///////////////////////////////////////////
 

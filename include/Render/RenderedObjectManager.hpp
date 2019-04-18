@@ -11,12 +11,11 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "RenderedObject.hpp"
+#include "../Core/Manager.hpp"
 
-namespace Shock
+namespace Shock::Render
 {
-namespace Render
-{
-    class RenderedObjectManager
+    class RenderedObjectManager : public Core::Manager
     {
     private:
         std::map<std::string, std::unique_ptr<RenderedObject> > _objects ;
@@ -30,10 +29,10 @@ namespace Render
 
         void handleEvent( Input::InputManager& inputManager ) ;
         void update( sf::Time dt ) ;
-        void draw( sf::RenderWindow& window ) ;
+        void render( sf::RenderTarget& target, sf::RenderStates states ) const ;
 
         unsigned long getNumRenderedObjects() const ;
     } ;
-}}
+}
 
 #endif //SHOCKENGINE_RENDEREDOBJECTMANAGER_HPP

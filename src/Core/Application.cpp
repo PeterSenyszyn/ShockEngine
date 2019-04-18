@@ -100,8 +100,6 @@ namespace Core
         {
             _inputManager.pushEvent( event ) ;
 
-            _inputManager.processInput() ;
-
             _stateStack.handleEvent( event ) ;
 
             _desktop.HandleEvent( event ) ;
@@ -128,7 +126,7 @@ namespace Core
 
         _stateStack.draw() ;
 
-        _renderedObjectManager.draw( _renderWindow ) ;
+        _renderedObjectManager.render( _renderWindow, sf::RenderStates() ) ;
 
         _renderWindow.setView( _renderWindow.getDefaultView() ) ;
 

@@ -29,9 +29,10 @@ namespace Game
         virtual void update( sf::Time dt ) {}
         virtual void render( sf::RenderTarget& target, sf::RenderStates states ) const {}
 
-        const void setName( const std::string& name )
+        virtual const void setName( const std::string& name )
         { _name = name ; }
-        const std::string& getName() const
+
+        virtual const std::string& getName() const
         { return _name ; }
 
     protected:

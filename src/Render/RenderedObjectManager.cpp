@@ -54,14 +54,12 @@ namespace Render
         }
     }
 
-    void RenderedObjectManager::draw( sf::RenderWindow& window )
+    void RenderedObjectManager::render( sf::RenderTarget& target, sf::RenderStates states ) const
     {
         for ( const auto& iter : _objects )
         {
             if ( iter.second->isEnabled() )
-            {
-                window.draw( *iter.second ) ;
-            }
+                target.draw( *iter.second ) ;
         }
     }
 

@@ -14,11 +14,6 @@ namespace Input
         initKeys() ;
     }
 
-    void InputManager::processInput()
-    {
-
-    }
-
     void InputManager::clearEvents()
     {
         _keyboardMap.clearEvents() ;
