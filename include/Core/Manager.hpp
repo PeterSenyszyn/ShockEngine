@@ -17,14 +17,10 @@ namespace Core
 
     class Manager
     {
-    private:
-
     public:
         Manager() = default ;
-
         virtual ~Manager() = default ;
 
-        virtual void processInput( InputManager& inputManager ) {}
         virtual void update( sf::Time dt ) {}
         virtual void render( sf::RenderTarget& target, sf::RenderStates states ) const {}
     } ;

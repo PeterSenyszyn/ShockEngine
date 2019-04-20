@@ -17,15 +17,6 @@ namespace Input
     class InputManager : public Core::Manager
     {
     public:
-        typedef thor::ActionMap<Input::KAI> KeyboardMap ;
-
-    private:
-        KeyboardMap _keyboardMap ;
-
-    private:
-        void initKeys() ;
-
-    public:
         InputManager() ;
 
         ///////////////////////////////////////////
@@ -36,6 +27,12 @@ namespace Input
         ///////////////////////////////////////////
 
         bool keyActive( Shock::Input::KAI key ) ;
+
+    private:
+        void initKeys() ;
+
+    private:
+        thor::ActionMap<Input::KAI> _keyboardMap ;
     } ;
 }}
 

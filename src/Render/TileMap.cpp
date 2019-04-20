@@ -8,6 +8,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <algorithm>
 
 /* The format for a .stm file is as follows:
  * Line 1 (path to tileset)
@@ -15,7 +16,8 @@
  * Line 3 (tile size height)
  * Line 4 (tilemap width in terms of #tiles)
  * Line 5 (tilemap height in terms of #tiles)
- * Line 6 (begin tilemap data delimited by commas)
+ * Line 6 (tile ids that will be flagged as "collidable")
+ * Line 7 (begin tilemap data delimited by commas)
  */
 
 //Example below:
@@ -24,6 +26,7 @@
  * 32
  * 16
  * 8
+ * 2, 3
  * 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
  * 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0,
  * 1, 1, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3,
@@ -40,6 +43,12 @@ namespace Shock::Render
     _tilesetPath( "" ),
     _tileSize(    { 0, 0 } ),
     _tilemapSize( { 0, 0 } )
+    {
+    }
+
+    TileMap::Tile::Tile( int tileId, sf::FloatRect bounds) :
+    tileId( tileId ),
+    bounds( bounds )
     {
     }
 
@@ -116,8 +125,6 @@ namespace Shock::Render
         file.clear() ;
         file.seekg( 0, std::ios::beg ) ;
 
-        //auto lineCount = 29 ;
-
         if ( lineCount > PRE_TILEMAP_DEF_LINE_COUNT )
         {
             int currentLine = 1 ;
@@ -136,6 +143,12 @@ namespace Shock::Render
             _tilemapSize.x = std::stoi( lineBuffer[3] ) ;
             _tilemapSize.y = std::stoi( lineBuffer[4] ) ;
 
+            //Extract collidable tile ids
+            std::stringstream collideTileIdStream( lineBuffer[5] ) ;
+            std::string tileIdStrBuffer ;
+            while ( std::getline( collideTileIdStream, tileIdStrBuffer, ',' ) )
+                _collidableTileIds.push_back( std::stoi( tileIdStrBuffer ) );
+
             _tileData = Utils::Matrix2D<int>( _tilemapSize.x, _tileSize.y ) ;
 
             //Ensure file has correct number of lines (PRE_TILEMAP_DEF_LINE_COUNT + tilemapSize.y)
@@ -145,7 +158,7 @@ namespace Shock::Render
 
         else
         {
-
+            std::cout << "Error analyzing file: not enough lines in file!" << std::endl ;
         }
 
         return false ;
@@ -188,6 +201,17 @@ namespace Shock::Render
                 quad[1].texCoords = sf::Vector2f( ( tu + 1 ) * _tileSize.x,   tv       * _tileSize.y ) ;
                 quad[2].texCoords = sf::Vector2f( ( tu + 1 ) * _tileSize.x, ( tv + 1 ) * _tileSize.y ) ;
                 quad[3].texCoords = sf::Vector2f(   tu       * _tileSize.x, ( tv + 1 ) * _tileSize.y ) ;
+
+                //Create tile abstraction
+                Tile tile( tileNumber, sf::FloatRect( quad[0].position.x,  quad[0].position.y,
+                                                      quad[1].position.x - quad[0].position.x,
+                                                      quad[2].position.y - quad[0].position.y ) ) ;
+
+                _tiles.push_back( tile ) ;
+
+                //If tile's id collidable (as specified in map data file) then flag it
+                if ( std::find( _collidableTileIds.begin(), _collidableTileIds.end(), tileNumber ) != _collidableTileIds.end() )
+                    addCollisionPoint( tile.bounds ) ;
             }
         }
 

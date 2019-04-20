@@ -26,6 +26,8 @@ namespace Game
         void update( sf::Time dt ) override ;
         void render( sf::RenderTarget& target, sf::RenderStates states ) const override ;
 
+        void defineCollisionBounds( std::vector<sf::FloatRect>& collisionPoints ) ;
+
     private:
         void attachComponents() ;
 
@@ -36,6 +38,12 @@ namespace Game
     private:
         sf::Texture* _texture ;
         sf::Sprite _sprite ;
+
+        //Since sprite getGlobalBounds returns a copy instead of a reference, we have to cache
+        //_sprite's bounds to pass to the collision component
+        sf::FloatRect _spriteBounds ;
+
+        std::vector<sf::FloatRect> _potentialCollisionPoints ;
     } ;
 }}
 

@@ -5,13 +5,15 @@
 #include <iostream>
 
 #include "../../include/Game/Player.hpp"
+#include "../../include/Game/Components/CollisionComponent.hpp"
 
 namespace Shock
 {
 namespace Game
 {
     Player::Player( sf::Texture* texture ) :
-    _texture( texture )
+    _texture( texture ),
+    _spriteBounds( _sprite.getGlobalBounds() )
     {
         if ( _texture != nullptr )
             _sprite.setTexture( *_texture ) ;
@@ -32,6 +34,8 @@ namespace Game
     void Player::update( sf::Time dt )
     {
         Entity::update( dt ) ;
+
+        _spriteBounds = _sprite.getGlobalBounds() ;
     }
 
     void Player::render( sf::RenderTarget& target, sf::RenderStates states ) const
@@ -41,11 +45,20 @@ namespace Game
         target.draw( _sprite, states ) ;
     }
 
+    void Player::defineCollisionBounds( std::vector<sf::FloatRect>& collisionPoints )
+    {
+        _potentialCollisionPoints = collisionPoints ;
+    }
+
     void Player::attachComponents()
     {
-        auto movement = std::make_unique<MovementComponent>( sf::Vector2f( _playerSpeedPX, _playerSpeedPX ), &_sprite ) ;
+        auto movement = std::make_shared<MovementComponent>( this, sf::Vector2f( _playerSpeedPX, _playerSpeedPX ), &_sprite ) ;
         movement->setHotKeys( KAI::WHOLD, KAI::AHOLD, KAI::SHOLD, KAI::DHOLD ) ; //Redundant, but keep here as reminder
 
-        addComponent( std::move( movement ) ) ;
+        auto collision = std::make_shared<CollisionComponent>( this, movement.get(), &_spriteBounds ) ;
+        collision->setPotentialCollisions( &_potentialCollisionPoints ) ;
+
+        addComponent( movement ) ;
+        addComponent( collision ) ;
     }
 }}

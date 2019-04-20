@@ -13,12 +13,12 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 
-#include "RenderedObject.hpp"
+#include "Map.hpp"
 #include "../Utilities/Math/Matrix.hpp"
 
 namespace Shock::Render
 {
-    class TileMap : public RenderedObject
+    class TileMap : public Map
     {
     public:
         TileMap() ;
@@ -31,8 +31,17 @@ namespace Shock::Render
         void render( sf::RenderTarget& target, sf::RenderStates states ) const override ;
 
     private:
+        struct Tile //Engine abstraction to make manipulation easier w/ game logic
+        {
+            Tile( int tileId, sf::FloatRect bounds ) ;
+
+            int           tileId ;
+            sf::FloatRect bounds ;
+        } ;
+
+    private:
         //Number of lines there should be in file BEFORE tile data
-        const unsigned int PRE_TILEMAP_DEF_LINE_COUNT = 5 ;
+        const unsigned int PRE_TILEMAP_DEF_LINE_COUNT = 6 ;
 
     private:
         sf::VertexArray          _vertices ;
@@ -42,6 +51,9 @@ namespace Shock::Render
         sf::Vector2i             _tileSize ;
         sf::Vector2i             _tilemapSize ;
         Utils::Matrix2D<int>     _tileData ;
+
+        std::vector<Tile>        _tiles ;
+        std::vector<int>         _collidableTileIds ;
 
     private:
         bool analyzeFile( std::ifstream& file ) ;

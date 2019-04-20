@@ -21,7 +21,8 @@ namespace Shock::Game
     class MovementComponent : public Component
     {
     public:
-        MovementComponent( sf::Vector2f       speedVector  = sf::Vector2f(),
+        MovementComponent( Entity*            parentEntity = nullptr,
+                           sf::Vector2f       speedVector  = sf::Vector2f(),
                            sf::Transformable* objectToMove = nullptr ) ;
 
         ~MovementComponent() override = default ;
@@ -31,9 +32,17 @@ namespace Shock::Game
 
         void setHotKeys( KAI upKey, KAI leftKey, KAI downKey, KAI rightKey ) ;
 
+        const void setVelocityVector( sf::Vector2f velocity ) ;
+        const sf::Vector2f& getVelocityVector() ;
+
+        const void setColliding( bool colliding ) ;
+        const bool isColliding() const ;
+
     private:
         sf::Vector2f _speedVector ; //Speed in 2D (base speed)
         sf::Vector2f _velocityVector ;
+
+        bool _colliding ;
 
         sf::Transformable* _objectToMove ;
 

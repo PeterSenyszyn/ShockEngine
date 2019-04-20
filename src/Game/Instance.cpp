@@ -6,8 +6,9 @@
 
 namespace Shock::Game
 {
-    Instance::Instance() :
+    Instance::Instance( Player* playerContext ) :
     _delete( false ),
+    _playerContext( playerContext ),
     _tilemap( nullptr )
     {
     }
@@ -43,6 +44,8 @@ namespace Shock::Game
     {
         _tilemap = std::make_unique<Render::TileMap>() ;
         _tilemap->load( mapPath ) ;
+
+        _playerContext->defineCollisionBounds( _tilemap->getCollisionPoints() ) ;
     }
 
     const void Instance::markForDeletion( bool value )

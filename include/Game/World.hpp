@@ -24,6 +24,8 @@ namespace Game
 
         void addInstance( Instance::Ptr instance ) ;
 
+        Player& getPlayer() ;
+
     private:
         void cleanInstances( std::vector<Instance::Ptr>::iterator iter ) ;
 

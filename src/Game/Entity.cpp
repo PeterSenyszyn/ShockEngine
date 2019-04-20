@@ -35,8 +35,8 @@ namespace Shock::Game
         return std::make_unique<T>() ;
     }
 
-    void Entity::addComponent( std::unique_ptr<Component> component )
+    void Entity::addComponent( std::shared_ptr<Component> component )
     {
-        _components.push_back( std::move( component ) ) ;
+        _components.push_back( component ) ;
     }
 }

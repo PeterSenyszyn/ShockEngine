@@ -4,12 +4,15 @@
 
 #include "../../../include/Game/Components/MovementComponent.hpp"
 
+#include <iostream>
+
 namespace Shock::Game
 {
-    MovementComponent::MovementComponent( sf::Vector2f speedVector, sf::Transformable* objectToMove ) :
-    Component( "Movement Component" ),
+    MovementComponent::MovementComponent( Entity* parentEntity, sf::Vector2f speedVector, sf::Transformable* objectToMove ) :
+    Component( "Movement Component", parentEntity ),
     _speedVector( speedVector ),
     _velocityVector( sf::Vector2f() ),
+    _colliding( false ),
     _objectToMove( objectToMove ),
     _upKey(), _leftKey(), _downKey(), _rightKey()
     {
@@ -19,7 +22,7 @@ namespace Shock::Game
 
     void MovementComponent::handleEvent( Input::InputManager& inputManager )
     {
-        _velocityVector = sf::Vector2f() ;
+        _velocityVector = sf::Vector2f( 0.f, 0.f ) ;
 
         //Lambdas to shorten ifs
         auto active = [&]( auto& key ) { return inputManager.keyActive( key ) ; } ;
@@ -39,7 +42,8 @@ namespace Shock::Game
 
     void MovementComponent::update( sf::Time dt )
     {
-        _objectToMove->move( _velocityVector * dt.asSeconds() ) ;
+        if ( !_colliding )
+            _objectToMove->move( _velocityVector * dt.asSeconds() ) ;
     }
 
     void MovementComponent::setHotKeys( KAI upKey, KAI leftKey, KAI downKey, KAI rightKey )
@@ -49,4 +53,14 @@ namespace Shock::Game
         _downKey  = downKey ;
         _rightKey = rightKey ;
     }
+
+    const void MovementComponent::setVelocityVector( sf::Vector2f velocity )
+    { _velocityVector = velocity ; }
+    const sf::Vector2f& MovementComponent::getVelocityVector()
+    { return _velocityVector ; }
+
+    const void MovementComponent::setColliding( bool colliding )
+    { _colliding = colliding ; }
+    const bool MovementComponent::isColliding() const
+    { return _colliding ; }
 }

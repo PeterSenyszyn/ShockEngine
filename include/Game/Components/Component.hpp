@@ -13,11 +13,10 @@
 
 #include "../../Input/InputManager.hpp"
 
-namespace Shock
+namespace Shock::Game
 {
-namespace Game
-{
-    //Interface
+    class Entity ;
+
     class Component
     {
     public:
@@ -29,18 +28,25 @@ namespace Game
         virtual void update( sf::Time dt ) {}
         virtual void render( sf::RenderTarget& target, sf::RenderStates states ) const {}
 
-        virtual const void setName( const std::string& name )
+        const void setName( const std::string& name )
         { _name = name ; }
 
-        virtual const std::string& getName() const
+        const std::string& getName() const
         { return _name ; }
 
+        Entity* getParentEntity()
+        { return _parentEntity ; }
+
     protected:
-        explicit Component( std::string name ) : _name( std::move( name ) ) {}
+        explicit Component( std::string name, Entity* parentEntity ) :
+            _name( std::move( name ) ),
+           _parentEntity( _parentEntity = parentEntity ) {}
 
     private:
         std::string _name ;
+
+        Entity* _parentEntity ;
     } ;
-}}
+}
 
 #endif //SHOCKENGINE_COMPONENT_HPP

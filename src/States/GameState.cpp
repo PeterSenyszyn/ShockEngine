@@ -5,9 +5,7 @@
 #include "../../include/States/GameState.hpp"
 #include <SFML/Graphics/CircleShape.hpp>
 
-namespace Shock
-{
-namespace States
+namespace Shock::States
 {
     GameState::GameState( Core::StateStack& stack, Context context ) :
     Core::State( stack, context ),
@@ -15,7 +13,7 @@ namespace States
     {
         using namespace Game ;
         //Create first instance
-        Instance::Ptr instance = std::make_unique<Instance>() ;
+        Instance::Ptr instance = std::make_unique<Instance>( &_world.getPlayer()) ;
         instance->addTilemap( "/home/petersenyszyn/CLionProjects/ShockEngine/mapdata/test.stm" ) ;
         _world.addInstance( std::move( instance ) ) ;
     }
@@ -41,12 +39,5 @@ namespace States
         sf::RenderWindow& window = *getContext().buffer->window ;
 
         _world.render( window, sf::RenderStates() ) ;
-
-        /*sf::CircleShape shape ;
-        shape.setFillColor( sf::Color::Blue ) ;
-        shape.setRadius( 40.f ) ;
-        shape.setPosition( 200, 200 ) ;
-
-        window.draw( shape ) ;*/
     }
-}}
+}

@@ -28,8 +28,9 @@ namespace Shock::Render
         const RenderedObject& getRenderedObject( const std::string& id ) const ;
 
         void handleEvent( Input::InputManager& inputManager ) ;
-        void update( sf::Time dt ) ;
-        void render( sf::RenderTarget& target, sf::RenderStates states ) const ;
+
+        void update( sf::Time dt ) override ;
+        void render( sf::RenderTarget& target, sf::RenderStates states ) const override ;
 
         unsigned long getNumRenderedObjects() const ;
     } ;

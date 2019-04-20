@@ -6,23 +6,37 @@
 
 namespace Shock::Game
 {
-    CollisionComponent::CollisionComponent( std::string name ) : Component( name )
+    CollisionComponent::CollisionComponent( Entity* parentEntity, MovementComponent* movementComponent,
+                                            sf::FloatRect* entityBounds ) :
+    Component( "Collision Component", parentEntity ),
+    _movementComponent( movementComponent ),
+    _entityBounds( entityBounds ),
+    _potentialMapCollisions()
     {
 
-    }
-
-    void CollisionComponent::handleEvent( Input::InputManager& inputManager )
-    {
-        Component::handleEvent( inputManager );
     }
 
     void CollisionComponent::update( sf::Time dt )
     {
-        Component::update( dt );
+        Component::update( dt ) ;
+
+        _movementComponent->setColliding( false ) ;
+
+        //Instead of just checking if entity's bounds hits potential collision points,
+        //we want to predict if on next tick a collision will occur to stop before the objects collide
+        sf::Vector2f vel  = _movementComponent->getVelocityVector() ;
+        sf::Vector2f offsettedPos( _entityBounds->left + ( vel.x * dt.asSeconds() ),
+                                   _entityBounds->top  + ( vel.y * dt.asSeconds() ) ) ;
+
+        sf::FloatRect nextTickBounds = sf::FloatRect( offsettedPos, sf::Vector2f( _entityBounds->width, _entityBounds->height ) ) ;
+
+        for ( const auto& potentialCollision : *_potentialMapCollisions )
+        {
+            if ( nextTickBounds.intersects( potentialCollision ) )
+                _movementComponent->setColliding( true ) ;
+        }
     }
 
-    void CollisionComponent::render( sf::RenderTarget& target, sf::RenderStates states ) const
-    {
-        Component::render( target, states );
-    }
+    void CollisionComponent::setPotentialCollisions( std::vector<sf::FloatRect>* potentialCollisions )
+    { _potentialMapCollisions = potentialCollisions ; }
 }

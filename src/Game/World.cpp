@@ -48,6 +48,9 @@ namespace Game
         _instances.push_back( std::move( instance ) ) ;
     }
 
+    Player& World::getPlayer()
+    { return _player ; }
+
     void World::cleanInstances( std::vector<Instance::Ptr>::iterator iter )
     {
         if ( (*iter)->needsDelete() )

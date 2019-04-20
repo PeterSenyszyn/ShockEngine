@@ -34,10 +34,10 @@ namespace Shock::Game
 
         template <class T> static Ptr create() ;
 
-        void addComponent( std::unique_ptr<Component> component ) ;
+        void addComponent( std::shared_ptr<Component> component ) ;
 
     private:
-        std::vector<std::unique_ptr<Component> > _components ;
+        std::vector<std::shared_ptr<Component> > _components ;
     } ;
 }
 
