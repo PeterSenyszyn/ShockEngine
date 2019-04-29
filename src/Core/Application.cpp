@@ -9,6 +9,9 @@
 
 #include "../../include/Render/Diagnostics.hpp"
 
+#include "../../include/Render/ImGui/imgui.h"
+#include "../../include/Render/ImGui/imgui-SFML.h"
+
 #include <SFML/Window/Event.hpp>
 
 namespace Shock
@@ -26,10 +29,10 @@ namespace Core
     {
         using namespace Resource ;
 
+        //Preload fonts
         _fontHolder.load( Fonts::Default, "/home/petersenyszyn/CLionProjects/ShockEngine/assets/Prototype.ttf" ) ;
-        //_fontHolder.load( Fonts::Default, "/Users/petersenyszyn/Documents/ShockEngine/assets/Prototype.ttf" ) ;
 
-        //Player
+        //Preload textures
         _textureHolder.load( Textures::Player, "/home/petersenyszyn/CLionProjects/ShockEngine/assets/player_temp.png" ) ;
     }
 
@@ -41,7 +44,7 @@ namespace Core
                                                   std::make_unique<Diagnostics>( _contextBuffer ) ) ;
     }
 
-    void Application::initGui()
+    void Application::initSFGUI()
     {
         auto font = std::make_shared<sf::Font>( _fontHolder.get( Resource::Fonts::Default ) ) ;
 
@@ -53,6 +56,14 @@ namespace Core
         _desktop.Add( window ) ;
 
         _desktop.Refresh() ;
+    }
+
+    void Application::initImGui()
+    {
+        ImGui::SFML::Init( _renderWindow ) ;
+
+        //ImGui::ShowTestWindow() ;
+        //ImGui::End() ;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////
@@ -83,7 +94,8 @@ namespace Core
         registerStates() ;
         loadResources() ;
         loadRenderedObjects() ;
-        initGui() ;
+        initSFGUI() ;
+        initImGui() ;
 
         _stateStack.pushState( StateIds::Game ) ;
     }
@@ -104,6 +116,8 @@ namespace Core
 
             _desktop.HandleEvent( event ) ;
 
+            ImGui::SFML::ProcessEvent( event ) ;
+
             if ( event.type == sf::Event::Closed )
             { quit(); }
         }
@@ -118,6 +132,8 @@ namespace Core
         _renderedObjectManager.update( dt ) ;
 
         _desktop.Update( dt.asSeconds() ) ;
+
+        ImGui::SFML::Update( _renderWindow, dt ) ;
     }
 
     void Application::render()
@@ -131,6 +147,10 @@ namespace Core
         _renderWindow.setView( _renderWindow.getDefaultView() ) ;
 
         _sfgui.Display( _renderWindow ) ;
+
+        ImGui::ShowTestWindow() ;
+
+        ImGui::SFML::Render( _renderWindow ) ;
 
         _renderWindow.display() ;
     }

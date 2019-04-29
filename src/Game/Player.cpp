@@ -57,7 +57,7 @@ namespace Shock::Game
         collision->setPotentialCollisions( &_potentialCollisionPoints ) ;
 
         addComponent( movement ) ;
-        //addComponent( collision ) ;
+        addComponent( collision ) ;
     }
 
     void Player::setCoords()

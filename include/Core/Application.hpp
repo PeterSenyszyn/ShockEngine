@@ -44,7 +44,9 @@ namespace Core
         void registerStates() ;
         void loadResources() ;
         void loadRenderedObjects() ;
-        void initGui() ;
+
+        void initSFGUI() ;
+        void initImGui() ;
 
     private:
         sf::RenderWindow _renderWindow ;

@@ -33,7 +33,10 @@ namespace Shock::Game
         for ( const auto& potentialCollision : *_potentialMapCollisions )
         {
             if ( nextTickBounds.intersects( potentialCollision ) )
+            {
                 _movementComponent->setColliding( true ) ;
+                _movementComponent->setVelocityVector( { 0.f, 0.f } ) ;
+            }
         }
     }
 
