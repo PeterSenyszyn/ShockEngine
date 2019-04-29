@@ -4,9 +4,7 @@
 
 #include "../../include/Render/RenderedObject.hpp"
 
-namespace Shock
-{
-namespace Render
+namespace Shock::Render
 {
     RenderedObject::RenderedObject() :
     _enabled( true )
@@ -34,4 +32,4 @@ namespace Render
 
     const void RenderedObject::setEnabled( bool value )
     {  _enabled = value ; }
-}}
+}

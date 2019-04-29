@@ -10,6 +10,7 @@
 #include "Entity.hpp"
 #include "../Render/TileMap.hpp"
 #include "Player.hpp"
+#include "Camera.hpp"
 
 /*
  * An Instance represents the "level" as you could imagine in the game.
@@ -38,6 +39,8 @@ namespace Shock::Game
         //Instances are designed to live within World indefinitely, so when we want to clean up
         //we'll mark this flag
         bool _delete ;
+
+        Camera _camera ;
 
         Player* _playerContext ;
 

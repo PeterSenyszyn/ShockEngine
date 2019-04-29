@@ -12,8 +12,9 @@ namespace Shock::States
     _world( context.buffer )
     {
         using namespace Game ;
+
         //Create first instance
-        Instance::Ptr instance = std::make_unique<Instance>( &_world.getPlayer()) ;
+        Instance::Ptr instance = std::make_unique<Instance>( &_world.getPlayer() ) ;
         instance->addTilemap( "/home/petersenyszyn/CLionProjects/ShockEngine/mapdata/test.stm" ) ;
         _world.addInstance( std::move( instance ) ) ;
     }

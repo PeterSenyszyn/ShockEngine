@@ -17,6 +17,8 @@ namespace Shock::Game
 
     void Entity::update( sf::Time dt )
     {
+        this->setCoords() ;
+
         for ( const auto& iter : _components )
             iter->update( dt ) ;
     }
@@ -29,14 +31,36 @@ namespace Shock::Game
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    template <class T>
-    Entity::Ptr Entity::create()
+    Entity::Entity( sf::RenderTarget* targetContext ) :
+    _targetContext( targetContext )
     {
-        return std::make_unique<T>() ;
     }
 
-    void Entity::addComponent( std::shared_ptr<Component> component )
+    void Entity::addComponent( Component::Ptr component )
     {
         _components.push_back( component ) ;
+    }
+
+    Component::Ptr Entity::getComponent( const std::string& name )
+    {
+        for ( const auto& iter : _components )
+        {
+            if ( iter->getName() == name )
+                return iter ;
+        }
+
+        return nullptr ;
+    }
+
+    const sf::Vector2f& Entity::getWorldCoords()
+    { return _worldCoords ; }
+
+    const sf::FloatRect& Entity::getBounds()
+    { return _bounds ; }
+
+    sf::Vector2f Entity::getCenterCoords()
+    {
+        return sf::Vector2f( _worldCoords.x + ( _bounds.width / 2.f ),
+                             _worldCoords.y + ( _bounds.height / 2.f ) ) ;
     }
 }

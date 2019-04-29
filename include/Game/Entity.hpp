@@ -21,6 +21,7 @@ namespace Shock::Game
     public:
         typedef std::unique_ptr<Entity> Ptr ;
 
+        explicit Entity( sf::RenderTarget* targetContext ) ;
         ~Entity() override = default ;
 
         ///From RenderedObject
@@ -32,12 +33,23 @@ namespace Shock::Game
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        template <class T> static Ptr create() ;
+        void           addComponent( Component::Ptr component ) ;
+        Component::Ptr getComponent( const std::string& name ) ;
 
-        void addComponent( std::shared_ptr<Component> component ) ;
+        virtual void setCoords() = 0 ;
+
+        const sf::Vector2f&  getWorldCoords() ;
+        const sf::FloatRect& getBounds() ;
+        sf::Vector2f         getCenterCoords() ;
+
+    protected:
+        sf::Vector2f  _worldCoords ;
+        sf::FloatRect _bounds ;
+
+        sf::RenderTarget* _targetContext ;
 
     private:
-        std::vector<std::shared_ptr<Component> > _components ;
+        std::vector<Component::Ptr> _components ;
     } ;
 }
 

@@ -7,13 +7,11 @@
 #include "../../include/Game/Player.hpp"
 #include "../../include/Game/Components/CollisionComponent.hpp"
 
-namespace Shock
+namespace Shock::Game
 {
-namespace Game
-{
-    Player::Player( sf::Texture* texture ) :
-    _texture( texture ),
-    _spriteBounds( _sprite.getGlobalBounds() )
+    Player::Player( sf::Texture* texture, sf::RenderTarget* targetContext ) :
+    Entity( targetContext ),
+    _texture( texture )
     {
         if ( _texture != nullptr )
             _sprite.setTexture( *_texture ) ;
@@ -22,6 +20,8 @@ namespace Game
         {
             std::cout << "Warning: Player object created with nullptr texture!" << std::endl ;
         }
+
+        _sprite.setPosition( 1000, 850 ) ;
 
         attachComponents() ;
     }
@@ -34,8 +34,6 @@ namespace Game
     void Player::update( sf::Time dt )
     {
         Entity::update( dt ) ;
-
-        _spriteBounds = _sprite.getGlobalBounds() ;
     }
 
     void Player::render( sf::RenderTarget& target, sf::RenderStates states ) const
@@ -55,10 +53,16 @@ namespace Game
         auto movement = std::make_shared<MovementComponent>( this, sf::Vector2f( _playerSpeedPX, _playerSpeedPX ), &_sprite ) ;
         movement->setHotKeys( KAI::WHOLD, KAI::AHOLD, KAI::SHOLD, KAI::DHOLD ) ; //Redundant, but keep here as reminder
 
-        auto collision = std::make_shared<CollisionComponent>( this, movement.get(), &_spriteBounds ) ;
+        auto collision = std::make_shared<CollisionComponent>( this, movement.get(), &_bounds ) ;
         collision->setPotentialCollisions( &_potentialCollisionPoints ) ;
 
         addComponent( movement ) ;
-        addComponent( collision ) ;
+        //addComponent( collision ) ;
     }
-}}
+
+    void Player::setCoords()
+    {
+        _worldCoords  = _sprite.getPosition() ;
+        _bounds       = _sprite.getGlobalBounds() ;
+    }
+}

@@ -42,7 +42,7 @@ namespace Shock::Render
     TileMap::TileMap() :
     _tilesetPath( "" ),
     _tileSize(    { 0, 0 } ),
-    _tilemapSize( { 0, 0 } )
+    _tilemapSizeTiles( { 0, 0 } )
     {
     }
 
@@ -137,11 +137,13 @@ namespace Shock::Render
                 currentLine++ ;
             }
 
-            _tilesetPath   = lineBuffer[0] ;
-            _tileSize.x    = std::stoi( lineBuffer[1] ) ;
-            _tileSize.y    = std::stoi( lineBuffer[2] ) ;
-            _tilemapSize.x = std::stoi( lineBuffer[3] ) ;
-            _tilemapSize.y = std::stoi( lineBuffer[4] ) ;
+            _tilesetPath        = lineBuffer[0] ;
+            _tileSize.x         = std::stoi( lineBuffer[1] ) ;
+            _tileSize.y         = std::stoi( lineBuffer[2] ) ;
+            _tilemapSizeTiles.x = std::stoi( lineBuffer[3] ) ;
+            _tilemapSizeTiles.y = std::stoi( lineBuffer[4] ) ;
+            _tilemapSize        = sf::Vector2u( _tilemapSizeTiles.x * _tileSize.x,
+                                                _tilemapSizeTiles.y * _tileSize.y ) ;
 
             //Extract collidable tile ids
             std::stringstream collideTileIdStream( lineBuffer[5] ) ;
@@ -149,10 +151,10 @@ namespace Shock::Render
             while ( std::getline( collideTileIdStream, tileIdStrBuffer, ',' ) )
                 _collidableTileIds.push_back( std::stoi( tileIdStrBuffer ) );
 
-            _tileData = Utils::Matrix2D<int>( _tilemapSize.x, _tileSize.y ) ;
+            _tileData = Utils::Matrix2D<int>( _tilemapSizeTiles.x, _tileSize.y ) ;
 
             //Ensure file has correct number of lines (PRE_TILEMAP_DEF_LINE_COUNT + tilemapSize.y)
-            if ( lineCount == PRE_TILEMAP_DEF_LINE_COUNT + _tilemapSize.y )
+            if ( lineCount == PRE_TILEMAP_DEF_LINE_COUNT + _tilemapSizeTiles.y )
                 return true ;
         }
 
@@ -175,12 +177,12 @@ namespace Shock::Render
 
         //Resize vertex array to fit map size
         _vertices.setPrimitiveType( sf::Quads ) ;
-        _vertices.resize( _tilemapSize.x * _tilemapSize.y * 4 ) ;
+        _vertices.resize( _tilemapSizeTiles.x * _tilemapSizeTiles.y * 4 ) ;
 
         //Populate vertex array w/ one quad per tile
-        for ( unsigned int i = 0 ; i < _tilemapSize.x ; i++ )
+        for ( unsigned int i = 0 ; i < _tilemapSizeTiles.x ; i++ )
         {
-            for ( unsigned int j = 0 ; j < _tilemapSize.y ; j++ )
+            for ( unsigned int j = 0 ; j < _tilemapSizeTiles.y ; j++ )
             {
                 int tileNumber = _tileData( i, j ) ;
 
@@ -188,7 +190,7 @@ namespace Shock::Render
                 int tu = tileNumber % ( _tileset.getSize().x / _tileSize.x ) ;
                 int tv = tileNumber / ( _tileset.getSize().x / _tileSize.x ) ;
 
-                sf::Vertex* quad = &_vertices[( i + j * _tilemapSize.x ) * 4] ;
+                sf::Vertex* quad = &_vertices[( i + j * _tilemapSizeTiles.x ) * 4] ;
 
                 //Define 4 positional coordinates
                 quad[0].position = sf::Vector2f(   i       * _tileSize.x,   j       * _tileSize.y ) ;
@@ -217,4 +219,7 @@ namespace Shock::Render
 
         return true ;
     }
+
+    const sf::Vector2u& TileMap::getTileMapSize()
+    { return _tilemapSize ; }
 }

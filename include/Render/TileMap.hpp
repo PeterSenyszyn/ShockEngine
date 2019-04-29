@@ -30,6 +30,8 @@ namespace Shock::Render
         void update( sf::Time dt ) override ;
         void render( sf::RenderTarget& target, sf::RenderStates states ) const override ;
 
+        const sf::Vector2u& getTileMapSize() ;
+
     private:
         struct Tile //Engine abstraction to make manipulation easier w/ game logic
         {
@@ -48,8 +50,9 @@ namespace Shock::Render
         sf::Texture              _tileset ;
 
         std::string              _tilesetPath ;
-        sf::Vector2i             _tileSize ;
-        sf::Vector2i             _tilemapSize ;
+        sf::Vector2u             _tileSize ;
+        sf::Vector2u             _tilemapSizeTiles ;
+        sf::Vector2u             _tilemapSize ;
         Utils::Matrix2D<int>     _tileData ;
 
         std::vector<Tile>        _tiles ;

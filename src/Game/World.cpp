@@ -10,7 +10,7 @@ namespace Game
 {
     World::World( Core::ContextBuffer* context ) :
     _context( context ),
-    _player( &_context->textureHolder->get( Resource::Textures::Player ) )
+    _player( &_context->textureHolder->get( Resource::Textures::Player ), context->window )
     {
 
     }
@@ -37,6 +37,7 @@ namespace Game
 
     void World::render( sf::RenderTarget& target, sf::RenderStates states )
     {
+        //FIXME only render when active
         for ( const auto& iter : _instances )
             iter->render( target, states ) ;
 

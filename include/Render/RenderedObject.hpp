@@ -12,9 +12,7 @@
 
 #include "../Input/InputManager.hpp"
 
-namespace Shock
-{
-namespace Render
+namespace Shock::Render
 {
     class RenderedObject : public sf::Drawable, public sf::Transformable
     {
@@ -36,6 +34,6 @@ namespace Render
         const bool isEnabled() const ;
         const void setEnabled( bool value ) ;
     } ;
-}}
+}
 
 #endif //SHOCKENGINE_RENDEREDOBJECT_HPP

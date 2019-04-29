@@ -33,7 +33,7 @@ namespace Shock::Game
         void setHotKeys( KAI upKey, KAI leftKey, KAI downKey, KAI rightKey ) ;
 
         const void setVelocityVector( sf::Vector2f velocity ) ;
-        const sf::Vector2f& getVelocityVector() ;
+        const sf::Vector2f getVelocityVector() ;
 
         const void setColliding( bool colliding ) ;
         const bool isColliding() const ;

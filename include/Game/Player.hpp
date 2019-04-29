@@ -11,14 +11,12 @@
 #include "Entity.hpp"
 #include "Components/MovementComponent.hpp"
 
-namespace Shock
-{
-namespace Game
+namespace Shock::Game
 {
     class Player : public Entity
     {
     public:
-        Player( sf::Texture* texture ) ;
+        Player( sf::Texture* texture, sf::RenderTarget* targetContext ) ;
 
         ~Player() override = default ;
 
@@ -27,6 +25,8 @@ namespace Game
         void render( sf::RenderTarget& target, sf::RenderStates states ) const override ;
 
         void defineCollisionBounds( std::vector<sf::FloatRect>& collisionPoints ) ;
+
+        void setCoords() override ;
 
     private:
         void attachComponents() ;
@@ -39,12 +39,8 @@ namespace Game
         sf::Texture* _texture ;
         sf::Sprite _sprite ;
 
-        //Since sprite getGlobalBounds returns a copy instead of a reference, we have to cache
-        //_sprite's bounds to pass to the collision component
-        sf::FloatRect _spriteBounds ;
-
         std::vector<sf::FloatRect> _potentialCollisionPoints ;
     } ;
-}}
+}
 
 #endif //SHOCKENGINE_PLAYER_HPP

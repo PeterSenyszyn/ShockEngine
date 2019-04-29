@@ -7,6 +7,7 @@
 
 #include <string>
 #include <functional>
+#include <memory>
 
 #include <SFML/System/Time.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
@@ -20,6 +21,8 @@ namespace Shock::Game
     class Component
     {
     public:
+        typedef std::shared_ptr<Component> Ptr ;
+
         virtual ~Component() = default ;
 
         //Component logic goes into these methods

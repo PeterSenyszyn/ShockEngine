@@ -56,6 +56,8 @@ namespace Render
 
     void RenderedObjectManager::render( sf::RenderTarget& target, sf::RenderStates states ) const
     {
+        target.setView( target.getDefaultView() ) ;
+
         for ( const auto& iter : _objects )
         {
             if ( iter.second->isEnabled() )

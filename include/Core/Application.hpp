@@ -27,6 +27,19 @@ namespace Core
 {
     class Application
     {
+    public:
+        Application() ;
+
+        void processInput() ;
+        void update( sf::Time dt ) ;
+        void render() ;
+
+        const bool isRunning() const ;
+        const void quit() ;
+
+        const float getMaxFps() const ;
+        const void setMaxFps( const float value ) ;
+
     private:
         void registerStates() ;
         void loadResources() ;
@@ -55,19 +68,6 @@ namespace Core
         sfg::Desktop _desktop ;
 
         float _maxFps ;
-
-    public:
-        Application() ;
-
-        void processInput() ;
-        void update( sf::Time dt ) ;
-        void render() ;
-
-        const bool isRunning() const ;
-        const void quit() ;
-
-        const float getMaxFps() const ;
-        const void setMaxFps( const float value ) ;
     } ;
 }}
 
