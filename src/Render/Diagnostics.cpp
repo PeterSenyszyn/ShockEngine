@@ -69,11 +69,11 @@ namespace Render
         _updateTime += dt ;
         _numFrames += 1 ;
 
-        if ( _updateTime >= sf::seconds( 1.0f ) )
+        if ( _updateTime >= sf::seconds( 1.f ) )
         {
             _fpsText.setString( "FPS: " + std::to_string( _numFrames ) ) ;
 
-            _updateTime -= sf::seconds( 1.0f ) ;
+            _updateTime -= sf::seconds( 1.f ) ;
             _numFrames = 0 ;
         }
 

@@ -94,7 +94,7 @@ namespace Core
         registerStates() ;
         loadResources() ;
         loadRenderedObjects() ;
-        initSFGUI() ;
+        //initSFGUI() ;
         initImGui() ;
 
         _stateStack.pushState( StateIds::Game ) ;
@@ -119,7 +119,7 @@ namespace Core
             ImGui::SFML::ProcessEvent( event ) ;
 
             if ( event.type == sf::Event::Closed )
-            { quit(); }
+                quit() ;
         }
 
         _renderedObjectManager.handleEvent( _inputManager ) ;
@@ -148,7 +148,7 @@ namespace Core
 
         _sfgui.Display( _renderWindow ) ;
 
-        ImGui::ShowTestWindow() ;
+        //ImGui::ShowTestWindow() ;
 
         ImGui::SFML::Render( _renderWindow ) ;
 
@@ -158,7 +158,7 @@ namespace Core
     ////////////////////////////////////////////////////////////////////////////////////////
 
     const bool Application::isRunning() const
-    { return _renderWindow.isOpen() ;}
+    { return _renderWindow.isOpen() ; }
 
     const void Application::quit()
     { _renderWindow.close() ; }

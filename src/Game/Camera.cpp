@@ -107,7 +107,7 @@ namespace Shock::Game
         target.setView( _view ) ;
 
         _topLeftCoord = target.mapPixelToCoords( sf::Vector2i( 0, 0 ), _view ) ;
-        _bottomRightCoord = target.mapPixelToCoords( sf::Vector2i( 1920, 1080 ), _view ) ;
+        _bottomRightCoord = target.mapPixelToCoords( sf::Vector2i( 1920, 1080 ), _view ) ; //FIXME: add global resolution constants
     }
 
     const void Camera::setMapSize( sf::Vector2u mapSize )
