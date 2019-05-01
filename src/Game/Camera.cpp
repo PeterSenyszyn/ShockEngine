@@ -33,7 +33,11 @@ namespace Shock::Game
         if ( !_mapSizeSet )
             return ;
 
-        _cameraVector = _mc->getVelocityVector() ;
+        if ( !_mc->isColliding() )
+            _cameraVector = _mc->getVelocityVector() ;
+
+        else
+            _cameraVector = sf::Vector2f( 0.f, 0.f ) ;
 
         if ( _topLeftCoord.x <= 0.f )
         {

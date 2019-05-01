@@ -36,6 +36,8 @@ namespace Shock::Game
             {
                 _movementComponent->setColliding( true ) ;
                 _movementComponent->setVelocityVector( { 0.f, 0.f } ) ;
+
+                return ;
             }
         }
     }
