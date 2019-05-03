@@ -21,7 +21,7 @@ namespace Shock::Game
             std::cout << "Warning: Player object created with nullptr texture!" << std::endl ;
         }
 
-        _sprite.setPosition( 1000, 850 ) ;
+        //_sprite.setPosition( 1000, 850 ) ;
 
         attachComponents() ;
     }

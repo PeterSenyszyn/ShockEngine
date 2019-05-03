@@ -10,14 +10,18 @@ namespace Shock::Game
     _delete( false ),
     _camera( sf::FloatRect( playerContext->getWorldCoords() , { 1920 / 2.f, 1080 / 2.f } ), playerContext ),
     _playerContext( playerContext ),
-    _tilemap( nullptr )
+    _tileMap( nullptr ),
+    _proceduralTileMap( nullptr )
     {
     }
 
     void Instance::handleEvent( Input::InputManager& inputManager )
     {
-        if ( _tilemap )
-            _tilemap->handleEvent( inputManager ) ;
+        if ( _tileMap )
+            _tileMap->handleEvent( inputManager ) ;
+
+        if ( _proceduralTileMap )
+            _proceduralTileMap->handleEvent( inputManager ) ;
 
         for ( const auto& iter : _entities )
             iter->handleEvent( inputManager ) ;
@@ -27,8 +31,11 @@ namespace Shock::Game
     {
         _camera.update( dt ) ;
 
-        if ( _tilemap )
-            _tilemap->update( dt ) ;
+        if ( _tileMap )
+            _tileMap->update( dt ) ;
+
+        if ( _proceduralTileMap )
+            _proceduralTileMap->update( dt ) ;
 
         for ( const auto& iter : _entities )
             iter->update( dt ) ;
@@ -38,21 +45,33 @@ namespace Shock::Game
     {
         _camera.render( target ) ;
 
-        if ( _tilemap )
-            _tilemap->render( target, states ) ;
+        if ( _tileMap )
+            _tileMap->render( target, states ) ;
+
+        if ( _proceduralTileMap )
+            _proceduralTileMap->render( target, states ) ;
 
         for ( const auto& iter : _entities )
             iter->render( target, states ) ;
     }
 
-    void Instance::addTilemap( const std::string& mapPath )
+    void Instance::addTileMap( const std::string& mapPath )
     {
-        _tilemap = std::make_unique<Render::TileMap>() ;
-        _tilemap->load( mapPath ) ;
+        _tileMap = std::make_unique<Render::TileMap>() ;
+        _tileMap->load( mapPath ) ;
 
-        _camera.setMapSize( _tilemap->getTileMapSize() ) ;
+        _camera.setMapSize( _tileMap->getTileMapSize() ) ;
 
-        _playerContext->defineCollisionBounds( _tilemap->getCollisionPoints() ) ;
+        _playerContext->defineCollisionBounds( _tileMap->getCollisionPoints() ) ;
+    }
+
+    void Instance::addProceduralTileMap( const std::string& tilesetPath, sf::Vector2u tileSize,
+                                         sf::Vector2u chunkSize  )
+    {
+        _proceduralTileMap = std::make_unique<Render::ProceduralTileMap>( _playerContext ) ;
+        _proceduralTileMap->init( tilesetPath, tileSize, chunkSize ) ;
+
+        _playerContext->defineCollisionBounds( _proceduralTileMap->getCollisionPoints() ) ;
     }
 
     const void Instance::markForDeletion( bool value )

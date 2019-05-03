@@ -9,6 +9,7 @@
 
 #include "Entity.hpp"
 #include "../Render/TileMap.hpp"
+#include "../Render/ProceduralTileMap.hpp"
 #include "Player.hpp"
 #include "Camera.hpp"
 
@@ -30,7 +31,9 @@ namespace Shock::Game
         void update( sf::Time dt ) ;
         void render( sf::RenderTarget& target, sf::RenderStates states ) ;
 
-        void addTilemap( const std::string& mapPath ) ;
+        void addTileMap( const std::string& mapPath ) ;
+        void addProceduralTileMap( const std::string& tilesetPath, sf::Vector2u tileSize,
+                                   sf::Vector2u chunkSize ) ;
 
         const void markForDeletion( bool value ) ;
         const bool needsDelete() const ;
@@ -46,7 +49,8 @@ namespace Shock::Game
 
         std::vector<Entity::Ptr> _entities ;
 
-        std::unique_ptr<Render::TileMap> _tilemap ;
+        std::unique_ptr<Render::TileMap> _tileMap ;
+        std::unique_ptr<Render::ProceduralTileMap> _proceduralTileMap ;
     } ;
 }
 

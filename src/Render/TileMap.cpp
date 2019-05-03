@@ -46,12 +46,6 @@ namespace Shock::Render
     {
     }
 
-    TileMap::Tile::Tile( int tileId, sf::FloatRect bounds) :
-    tileId( tileId ),
-    bounds( bounds )
-    {
-    }
-
     bool TileMap::load( const std::string& tilemapPath )
     {
         //Make sure path has .stm as file extension
@@ -132,7 +126,7 @@ namespace Shock::Render
 
             while ( currentLine <= PRE_TILEMAP_DEF_LINE_COUNT )
             {
-                std::getline( file, lineBuffer[currentLine - 1] );
+                std::getline( file, lineBuffer[currentLine - 1] ) ;
 
                 currentLine++ ;
             }

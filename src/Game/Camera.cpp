@@ -30,68 +30,68 @@ namespace Shock::Game
     //When the entity has fast movement speeds, it can cause the camera to get slightly offset
     void Camera::update( sf::Time dt )
     {
-        if ( !_mapSizeSet )
-            return ;
-
         if ( !_mc->isColliding() )
             _cameraVector = _mc->getVelocityVector() ;
 
         else
             _cameraVector = sf::Vector2f( 0.f, 0.f ) ;
 
-        if ( _topLeftCoord.x <= 0.f )
+        if ( _mapSize != sf::Vector2u( 0, 0 ) )
         {
-            _topLeftCoord.x = 0.f ;
-
-            if ( _cameraVector.x < 0.f )
-                _cameraVector.x = 0.f ;
-
-            else if ( _cameraVector.x > 0.f )
+            if ( _topLeftCoord.x <= 0.f )
             {
-                if ( _followedEntity->getCenterCoords().x <= _view.getSize().x / 2.f )
+                _topLeftCoord.x = 0.f ;
+
+                if ( _cameraVector.x < 0.f )
                     _cameraVector.x = 0.f ;
+
+                else if ( _cameraVector.x > 0.f )
+                {
+                    if ( _followedEntity->getCenterCoords().x <= _view.getSize().x / 2.f )
+                        _cameraVector.x = 0.f ;
+                }
             }
-        }
 
-        else if ( _bottomRightCoord.x >= _mapSize.x )
-        {
-            _bottomRightCoord.x = _mapSize.x ;
-
-            if ( _cameraVector.x > 0.f )
-                _cameraVector.x = 0.f ;
-
-            else if ( _cameraVector.x < 0.f )
+            else if ( _bottomRightCoord.x >= _mapSize.x )
             {
-                if ( _followedEntity->getCenterCoords().x + ( _view.getSize().x / 2.f ) >= _mapSize.x )
+                _bottomRightCoord.x = _mapSize.x ;
+
+                if ( _cameraVector.x > 0.f )
                     _cameraVector.x = 0.f ;
+
+                else if ( _cameraVector.x < 0.f )
+                {
+                    if ( _followedEntity->getCenterCoords().x + ( _view.getSize().x / 2.f ) >= _mapSize.x )
+                        _cameraVector.x = 0.f ;
+                }
             }
-        }
 
-        if ( _topLeftCoord.y <= 0.f )
-        {
-            _topLeftCoord.y = 0.f ;
-
-            if ( _cameraVector.y < 0.f )
-                _cameraVector.y = 0.f ;
-
-            else if ( _cameraVector.y > 0.f )
+            if ( _topLeftCoord.y <= 0.f )
             {
-                if ( _followedEntity->getCenterCoords().y - ( _view.getSize().y / 2.f ) <= 0.f )
+                _topLeftCoord.y = 0.f ;
+
+                if ( _cameraVector.y < 0.f )
                     _cameraVector.y = 0.f ;
+
+                else if ( _cameraVector.y > 0.f )
+                {
+                    if ( _followedEntity->getCenterCoords().y - ( _view.getSize().y / 2.f ) <= 0.f )
+                        _cameraVector.y = 0.f ;
+                }
             }
-        }
 
-        else if ( _bottomRightCoord.y >= _mapSize.y )
-        {
-            _bottomRightCoord.y = _mapSize.y ;
-
-            if ( _cameraVector.y > 0.f )
-                _cameraVector.y = 0.f ;
-
-            else if ( _cameraVector.y < 0.f )
+            else if ( _bottomRightCoord.y >= _mapSize.y )
             {
-                if ( _followedEntity->getCenterCoords().y + ( _view.getSize().y / 2.f ) >= _mapSize.y )
+                _bottomRightCoord.y = _mapSize.y ;
+
+                if ( _cameraVector.y > 0.f )
                     _cameraVector.y = 0.f ;
+
+                else if ( _cameraVector.y < 0.f )
+                {
+                    if ( _followedEntity->getCenterCoords().y + ( _view.getSize().y / 2.f ) >= _mapSize.y )
+                        _cameraVector.y = 0.f ;
+                }
             }
         }
 

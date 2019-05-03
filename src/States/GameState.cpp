@@ -15,7 +15,9 @@ namespace Shock::States
 
         //Create first instance
         Instance::Ptr instance = std::make_unique<Instance>( &_world.getPlayer() ) ;
-        instance->addTilemap( "/home/petersenyszyn/CLionProjects/ShockEngine/mapdata/test.stm" ) ;
+        //instance->addTileMap( "/home/petersenyszyn/CLionProjects/ShockEngine/mapdata/test.stm" ) ;
+        instance->addProceduralTileMap( "/home/petersenyszyn/CLionProjects/ShockEngine/assets/tilesheet.png", sf::Vector2u( 64, 64 ),
+                                        sf::Vector2u( 10, 10 ) ) ;
         _world.addInstance( std::move( instance ) ) ;
     }
 

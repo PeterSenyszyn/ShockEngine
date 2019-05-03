@@ -14,6 +14,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 
 #include "Map.hpp"
+#include "Tile.hpp"
 #include "../Utilities/Math/Matrix.hpp"
 
 namespace Shock::Render
@@ -33,13 +34,7 @@ namespace Shock::Render
         const sf::Vector2u& getTileMapSize() ;
 
     private:
-        struct Tile //Engine abstraction to make manipulation easier w/ game logic
-        {
-            Tile( int tileId, sf::FloatRect bounds ) ;
 
-            int           tileId ;
-            sf::FloatRect bounds ;
-        } ;
 
     private:
         //Number of lines there should be in file BEFORE tile data
